@@ -10,12 +10,20 @@ await server.listen();
 
 process.env.VITE_PREVIEW_FILE = path.join(cwdDir, server.config.build.outDir, 'index.html')
 
+let electronProcess = null
+
 build({
+    build: {
+        watch: {},
+    },
     plugins: [
         {
             name: 'electron-preview',
             writeBundle() {
-                spawn(electron.toString(), ['.'], {
+                if (electronProcess) {
+                    electronProcess.kill()
+                }
+                electronProcess = spawn(electron.toString(), ['.'], {
                     cwd: cwdDir, stdio: 'inherit',
                 })
             }
