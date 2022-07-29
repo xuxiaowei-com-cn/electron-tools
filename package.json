@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
+    "electron:dev": "node scripts/dev.mjs",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
     "prepare": "husky install"
   },
