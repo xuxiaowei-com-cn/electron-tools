@@ -1,0 +1,34 @@
+{
+  "name": "electron-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/background.js",
+  "scripts": {
+    "start": "electron .",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix"
+  },
+  "author": "徐晓伟 <xuxiaowei@xuxiaowei.com.cn>",
+  "bugs": {
+    "url": "https://gitee.com/xuxiaowei-com-cn/electron-tools/issues"
+  },
+  "homepage": "https://gitee.com/xuxiaowei-com-cn/electron-tools",
+  "keywords": [
+    "electron"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/xuxiaowei-com-cn/electron-tools.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.31.0",
+    "@typescript-eslint/parser": "5.31.0",
+    "electron": "19.0.10",
+    "eslint": "8.20.0",
+    "eslint-config-standard": "17.0.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-n": "15.2.4",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-vue": "9.3.0"
+  }
+}
