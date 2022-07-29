@@ -5,7 +5,8 @@
   "main": "src/background.js",
   "scripts": {
     "start": "electron .",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix"
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
+    "prepare": "husky install"
   },
   "author": "徐晓伟 <xuxiaowei@xuxiaowei.com.cn>",
   "bugs": {
@@ -29,6 +30,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-n": "15.2.4",
     "eslint-plugin-promise": "6.0.0",
-    "eslint-plugin-vue": "9.3.0"
+    "eslint-plugin-vue": "9.3.0",
+    "husky": "8.0.0"
   }
 }
