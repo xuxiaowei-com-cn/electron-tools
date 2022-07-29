@@ -5,6 +5,9 @@
   "main": "src/background.js",
   "scripts": {
     "start": "electron .",
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
     "prepare": "husky install"
   },
@@ -20,10 +23,14 @@
     "type": "git",
     "url": "git+https://gitee.com/xuxiaowei-com-cn/electron-tools.git"
   },
+  "dependencies": {
+    "vue": "3.2.37"
+  },
   "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.31.0",
     "@typescript-eslint/parser": "5.31.0",
+    "@vitejs/plugin-vue": "3.0.1",
     "electron": "19.0.10",
     "eslint": "8.20.0",
     "eslint-config-standard": "17.0.0",
@@ -31,6 +38,9 @@
     "eslint-plugin-n": "15.2.4",
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-vue": "9.3.0",
-    "husky": "8.0.0"
+    "husky": "8.0.0",
+    "typescript": "4.7.4",
+    "vite": "3.0.3",
+    "vue-tsc": "0.39.2"
   }
 }

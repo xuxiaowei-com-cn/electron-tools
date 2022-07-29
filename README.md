@@ -30,3 +30,9 @@ npx eslint --init
 ```
 npx husky-init
 ```
+
+- vite vue ts
+
+```
+npm create vite@latest electron-tools -- --template vue-ts
+```
