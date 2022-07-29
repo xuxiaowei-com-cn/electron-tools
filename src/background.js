@@ -1,7 +1,7 @@
 // background.js
 // https://www.electronjs.org/docs/latest/tutorial/quick-start#recap
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, protocol, BrowserWindow } = require('electron')
 const path = require('path')
 
 const createWindow = () => {
@@ -15,7 +15,20 @@ const createWindow = () => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(process.env.VITE_URL)
+  if (process.env.VITE_URL) {
+    mainWindow.loadURL(process.env.VITE_URL).then(response => console.error('Vite URL 加载失败', response))
+  } else if (process.env.VITE_PREVIEW_FILE) {
+    const scheme = 'electron-tools'
+    protocol.registerFileProtocol(scheme, function (request, callback) {
+      const url = path.join(process.cwd(), request.url.substring(scheme.length + 2))
+      // eslint-disable-next-line n/no-callback-literal
+      callback({ path: url.toString() })
+    })
+
+    mainWindow.loadURL('electron-tools://dist/index.html').then(response => console.error('Vite 预览文件加载失败', response))
+  } else {
+    console.error('loadURL or loadFile is null/undefined')
+  }
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
