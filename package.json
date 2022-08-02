@@ -14,13 +14,6 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
     "prepare": "husky install"
   },
-  "build": {
-    "files": [
-      "vite/**/*",
-      "src/background.js",
-      "src/preload.js"
-    ]
-  },
   "author": "徐晓伟 <xuxiaowei@xuxiaowei.com.cn>",
   "bugs": {
     "url": "https://gitee.com/xuxiaowei-com-cn/electron-tools/issues"
