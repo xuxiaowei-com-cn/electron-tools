@@ -36,3 +36,13 @@ npx husky-init
 ```
 npm create vite@latest electron-tools -- --template vue-ts
 ```
+
+## 依赖
+
+```
+npm i vue
+```
+
+```
+npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue electron eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue husky typescript vite vue-tsc
+```
