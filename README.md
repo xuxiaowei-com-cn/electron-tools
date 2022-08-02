@@ -40,11 +40,11 @@ npm create vite@latest electron-tools -- --template vue-ts
 ## 依赖
 
 ```
-npm i vue
+npm i electron-log
 ```
 
 ```
-npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue electron electron-builder eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue husky typescript vite vue-tsc
+npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue electron electron-builder eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue husky typescript vite vue vue-tsc
 ```
 
 ## 文档
