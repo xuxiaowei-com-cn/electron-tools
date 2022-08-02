@@ -24,8 +24,16 @@ const electronProcess = spawn(electron.toString(), ['.'], {
 
 // 延时监听 Electron 是否关闭
 const interval = setInterval(async function () {
-    if (electronProcess.exitCode === 0) { // Electron 已关闭
-        console.log('开发模式 已关闭')
+    if (electronProcess.exitCode === null) {
+        // 开发模式 正常运行
+    } else {
+        if (electronProcess.exitCode === 0) {
+            console.log('开发模式 已关闭')
+        } else if (electronProcess.exitCode === 1) {
+            console.log('开发模式 意外退出')
+        } else {
+            console.log('开发模式 未知代码：', electronProcess.exitCode)
+        }
         clearInterval(interval); // 取消延时
         await server.close() // 关闭 vite
     }
