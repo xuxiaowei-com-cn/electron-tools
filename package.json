@@ -27,6 +27,9 @@
     "url": "git+https://gitee.com/xuxiaowei-com-cn/electron-tools.git"
   },
   "license": "MIT",
+  "dependencies": {
+    "electron-log": "4.4.8"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.32.0",
     "@typescript-eslint/parser": "5.32.0",

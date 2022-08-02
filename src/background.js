@@ -3,6 +3,11 @@
 // Modules to control application life and create native browser window
 const { app, protocol, BrowserWindow } = require('electron')
 const path = require('path')
+const log = require('electron-log')
+
+// 日志位置：C:\Users\%USERPROFILE%\AppData\Roaming\electron-tools\logs
+
+log.transports.file.fileName = 'background.log'
 
 const createWindow = () => {
   // Create the browser window.
@@ -17,9 +22,9 @@ const createWindow = () => {
   // and load the index.html of the app.
   if (process.env.VITE_URL) { // 开发模式
     mainWindow.loadURL(process.env.VITE_URL).then(() => {
-      console.info('Vite URL 加载成功')
+      log.info('Vite URL 加载成功')
     }).catch(response => {
-      console.error('Vite URL 加载失败', response)
+      log.error('Vite URL 加载失败', response)
     })
   } else if (process.env.VITE_PREVIEW_FILE) { // 预览模式
     const scheme = 'electron-tools'
@@ -29,9 +34,9 @@ const createWindow = () => {
       callback({ path: url.toString() })
     })
     mainWindow.loadURL(`${scheme}://${process.env.VITE_PREVIEW_FILE}`).then(() => {
-      console.info('Vite 预览文件 加载成功')
+      log.info('Vite 预览文件 加载成功')
     }).catch(response => {
-      console.error('Vite 预览文件 加载失败', response)
+      log.error('Vite 预览文件 加载失败', response)
     })
   } else { // 生产模式
     const scheme = 'electron-tools'
@@ -41,9 +46,9 @@ const createWindow = () => {
       callback({ path: url.toString() })
     })
     mainWindow.loadURL(`${scheme}://dist/index.html`).then(() => {
-      console.info('Vite 生产文件 加载成功')
+      log.info('Vite 生产文件 加载成功')
     }).catch(response => {
-      console.error('Vite 生产文件 加载失败', response)
+      log.error('Vite 生产文件 加载失败', response)
     })
   }
 
