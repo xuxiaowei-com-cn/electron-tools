@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 /.eslintcache
-/vite/
+/release/

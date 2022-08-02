@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "electron:dev": "node scripts/dev.mjs",
     "electron:preview": "node scripts/preview.mjs",
-    "electron:build": "vue-tsc --noEmit && vite build && electron-builder",
+    "electron:build": "vue-tsc --noEmit && vite build && electron-builder --config electron-builder.json5",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
     "prepare": "husky install"
   },

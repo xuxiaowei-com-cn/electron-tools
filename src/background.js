@@ -16,7 +16,11 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   if (process.env.VITE_URL) { // 开发模式
-    mainWindow.loadURL(process.env.VITE_URL).then(response => console.error('Vite URL 加载失败', response))
+    mainWindow.loadURL(process.env.VITE_URL).then(() => {
+      console.info('Vite URL 加载成功')
+    }).catch(response => {
+      console.error('Vite URL 加载失败', response)
+    })
   } else if (process.env.VITE_PREVIEW_FILE) { // 预览模式
     const scheme = 'electron-tools'
     protocol.registerFileProtocol(scheme, function (request, callback) {
@@ -24,7 +28,11 @@ const createWindow = () => {
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
-    mainWindow.loadURL(`${scheme}://${process.env.VITE_PREVIEW_FILE}`).then(response => console.error('Vite 预览文件加载失败', response))
+    mainWindow.loadURL(`${scheme}://${process.env.VITE_PREVIEW_FILE}`).then(() => {
+      console.info('Vite 预览文件 加载成功')
+    }).catch(response => {
+      console.error('Vite 预览文件 加载失败', response)
+    })
   } else { // 生产模式
     const scheme = 'electron-tools'
     protocol.registerFileProtocol(scheme, function (request, callback) {
@@ -32,11 +40,17 @@ const createWindow = () => {
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
-    mainWindow.loadURL(`${scheme}://vite/index.html`).then(response => console.error('Vite 生产文件加载失败', response))
+    mainWindow.loadURL(`${scheme}://dist/index.html`).then(() => {
+      console.info('Vite 生产文件 加载成功')
+    }).catch(response => {
+      console.error('Vite 生产文件 加载失败', response)
+    })
   }
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  if (!app.isPackaged) { // 是否打包
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools()
+  }
 }
 
 // This method will be called when Electron has finished
