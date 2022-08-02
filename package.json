@@ -1,7 +1,7 @@
 {
   "name": "electron-tools",
   "version": "1.0.0",
-  "description": "",
+  "description": "基于 vite 3、Electron 20 的工具箱",
   "main": "src/background.js",
   "scripts": {
     "start": "electron .",
