@@ -4,7 +4,7 @@ import electron from 'electron'
 
 const cwdDir = process.cwd()
 
-const server = await createServer({ server: { host: true } });
+const server = await createServer({ configFile: 'vite.config.ts', server: { host: true } });
 await server.listen();
 
 console.info(server.resolvedUrls)

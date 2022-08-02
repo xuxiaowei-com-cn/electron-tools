@@ -24,10 +24,15 @@ const createWindow = () => {
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
-
-    mainWindow.loadURL(scheme + '://dist/index.html').then(response => console.error('Vite 预览文件加载失败', response))
-  } else { // 未匹配模式
-    console.error('loadURL or loadFile is null/undefined')
+    mainWindow.loadURL(`${scheme}://${process.env.VITE_PREVIEW_FILE}`).then(response => console.error('Vite 预览文件加载失败', response))
+  } else { // 生产模式
+    const scheme = 'electron-tools'
+    protocol.registerFileProtocol(scheme, function (request, callback) {
+      const url = path.join(process.cwd(), 'resources/app.asar', request.url.substring(scheme.length + 2))
+      // eslint-disable-next-line n/no-callback-literal
+      callback({ path: url.toString() })
+    })
+    mainWindow.loadURL(`${scheme}://vite/index.html`).then(response => console.error('Vite 生产文件加载失败', response))
   }
 
   // Open the DevTools.

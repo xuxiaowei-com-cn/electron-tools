@@ -5,10 +5,10 @@ import path from 'path'
 
 const cwdDir = process.cwd()
 
-const server = await createServer({ server: { host: true } });
+const server = await createServer({ configFile: 'vite.config.ts', server: { host: true } });
 await server.listen();
 
-process.env.VITE_PREVIEW_FILE = path.join(cwdDir, server.config.build.outDir, 'index.html')
+process.env.VITE_PREVIEW_FILE = path.join(server.config.build.outDir, 'index.html')
 
 let electronProcess = null
 
