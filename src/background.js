@@ -15,9 +15,9 @@ const createWindow = () => {
   })
 
   // and load the index.html of the app.
-  if (process.env.VITE_URL) {
+  if (process.env.VITE_URL) { // 开发模式
     mainWindow.loadURL(process.env.VITE_URL).then(response => console.error('Vite URL 加载失败', response))
-  } else if (process.env.VITE_PREVIEW_FILE) {
+  } else if (process.env.VITE_PREVIEW_FILE) { // 预览模式
     const scheme = 'electron-tools'
     protocol.registerFileProtocol(scheme, function (request, callback) {
       const url = path.join(process.cwd(), request.url.substring(scheme.length + 2))
@@ -25,8 +25,8 @@ const createWindow = () => {
       callback({ path: url.toString() })
     })
 
-    mainWindow.loadURL('electron-tools://dist/index.html').then(response => console.error('Vite 预览文件加载失败', response))
-  } else {
+    mainWindow.loadURL(scheme + '://dist/index.html').then(response => console.error('Vite 预览文件加载失败', response))
+  } else { // 未匹配模式
     console.error('loadURL or loadFile is null/undefined')
   }
 
