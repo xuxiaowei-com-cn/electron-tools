@@ -20,7 +20,13 @@
   },
   "homepage": "https://gitee.com/xuxiaowei-com-cn/electron-tools",
   "keywords": [
-    "electron"
+    "electron-log",
+    "electron",
+    "electron-builder",
+    "eslint",
+    "typescript",
+    "vite",
+    "vue"
   ],
   "repository": {
     "type": "git",
