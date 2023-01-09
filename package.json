@@ -40,6 +40,7 @@
     "electron-log": "4.4.8"
   },
   "devDependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "5.48.0",
     "@typescript-eslint/parser": "5.48.0",
     "@vitejs/plugin-vue": "4.0.0",
