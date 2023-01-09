@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <el-button>Default</el-button>
     <div>
       We are using Node.js <span id="node-version"></span>,
       Chromium <span id="chrome-version"></span>,
