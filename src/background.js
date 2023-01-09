@@ -5,9 +5,23 @@ const { app, protocol, BrowserWindow } = require('electron')
 const path = require('path')
 const log = require('electron-log')
 
+// 日志文件名
 // 日志位置：C:\Users\%USERPROFILE%\AppData\Roaming\electron-tools\logs
-
 log.transports.file.fileName = 'background.log'
+// 日志文件等级
+// log.transports.file.level =
+// 日志控制台等级
+// log.transports.console.level =
+// 日志文件格式
+// log.transports.file.format =
+// 日志文件大小，默认：1048576（1M），超过此大小后会将现有日志移动到 *.old.log，删除当前文件。设置为 0 后，禁用此功能
+// log.transports.file.maxSize =
+
+// 创建多实例日志，log2 同 log
+// const log2 = log.create('log2')
+
+// 日志范围
+// const userLog = log.scope('user')
 
 const createWindow = () => {
   // Create the browser window.
