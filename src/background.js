@@ -57,26 +57,15 @@ const createWindow = () => {
   // and load the index.html of the app.
   if (process.env.VITE_URL) { // 开发模式
     mainWindow.loadURL(process.env.VITE_URL).then(() => {
-      log.info('Vite URL 加载成功')
+      log.info('Vite 开发URL 加载成功')
     }).catch(response => {
-      log.error('Vite URL 加载失败', response)
+      log.error('Vite 开发URL 加载失败', response)
     })
-  } else if (options.ENV === 'build_preview') { // 构建后预览模式
-    protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
-      const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
-      let requestUrl = request.url.substring(PROTOCOL_NAME.length + 2)
-      // 删除 #
-      // 删除多余的 /
-      requestUrl = requestUrl.split('#')[0].replace(/^\/+/, '/')
-      // 拼接
-      const url = path.join(local, requestUrl)
-      // eslint-disable-next-line n/no-callback-literal
-      callback({ path: url.toString() })
-    })
-    mainWindow.loadURL(`${PROTOCOL_NAME}://dist/index.html`).then(() => {
-      log.info('Vite 预览文件 加载成功')
+  } else if (process.env.VITE_PREVIEW_URL) { // 预览模式
+    mainWindow.loadURL(process.env.VITE_PREVIEW_URL).then(() => {
+      log.info('Vite 预览URL 加载成功')
     }).catch(response => {
-      log.error('Vite 预览文件 加载失败', response)
+      log.error('Vite 预览URL 加载失败', response)
     })
   } else { // 生产模式
     protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
