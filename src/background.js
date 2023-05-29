@@ -23,6 +23,13 @@ log.transports.file.fileName = 'background.log'
 // 日志范围
 // const userLog = log.scope('user')
 
+// 设置协议
+const PROTOCOL_NAME = 'electron-tools'
+log.info('生产模式协议：', PROTOCOL_NAME)
+
+// 设置协议为默认客户端
+app.setAsDefaultProtocolClient(PROTOCOL_NAME)
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -41,25 +48,31 @@ const createWindow = () => {
       log.error('Vite URL 加载失败', response)
     })
   } else if (process.env.VITE_PREVIEW_FILE) { // 预览模式
-    const scheme = 'electron-tools'
-    protocol.registerFileProtocol(scheme, function (request, callback) {
-      const url = path.join(process.cwd(), request.url.substring(scheme.length + 2))
+    protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
+      const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
+      // log.info('预览模式 cwd', process.cwd())
+      // log.info('预览模式 __dirname', __dirname)
+      // log.info('预览模式 local', local)
+      const url = path.join(local, request.url.substring(PROTOCOL_NAME.length + 2))
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
-    mainWindow.loadURL(`${scheme}://${process.env.VITE_PREVIEW_FILE}`).then(() => {
+    mainWindow.loadURL(`${PROTOCOL_NAME}://${process.env.VITE_PREVIEW_FILE}`).then(() => {
       log.info('Vite 预览文件 加载成功')
     }).catch(response => {
       log.error('Vite 预览文件 加载失败', response)
     })
   } else { // 生产模式
-    const scheme = 'electron-tools'
-    protocol.registerFileProtocol(scheme, function (request, callback) {
-      const url = path.join(process.cwd(), 'resources/app.asar', request.url.substring(scheme.length + 2))
+    protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
+      const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
+      // log.info('生产模式 cwd', process.cwd())
+      // log.info('生产模式 __dirname', __dirname)
+      // log.info('生产模式 local', local)
+      const url = path.join(local, request.url.substring(PROTOCOL_NAME.length + 2))
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
-    mainWindow.loadURL(`${scheme}://dist/index.html`).then(() => {
+    mainWindow.loadURL(`${PROTOCOL_NAME}://dist/index.html`).then(() => {
       log.info('Vite 生产文件 加载成功')
     }).catch(response => {
       log.error('Vite 生产文件 加载失败', response)
