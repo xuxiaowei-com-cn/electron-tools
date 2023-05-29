@@ -1,17 +1,23 @@
 # electron-tools
 
-## Configuration
+## Init & Configuration
 
-- Electron Install
+- Init
 
+```shell
+npm create vite@latest electron-tools -- --template vue-ts
 ```
+
+- Electron
+
+```shell
 npm config set ELECTRON_MIRROR https://npm.taobao.org/mirrors/electron/
 npm i -D electron
 ```
 
 - eslint
 
-```
+```shell
 npm i -D eslint
 npx eslint --init
 # 选择
@@ -27,23 +33,17 @@ npx eslint --init
 
 - husky
 
-```
+```shell
 npx husky-init
-```
-
-- vite vue ts
-
-```
-npm create vite@latest electron-tools -- --template vue-ts
 ```
 
 ## 依赖
 
-```
+```shell
 npm i electron-log
 ```
 
-```
+```shell
 npm i -D @element-plus/icons-vue @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue electron electron-builder element-plus eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue husky sass typescript unplugin-auto-import unplugin-vue-components vite vue vue-router vue-tsc
 ```
 
