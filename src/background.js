@@ -31,9 +31,15 @@ log.info('生产模式协议：', PROTOCOL_NAME)
 // 设置协议为默认客户端
 app.setAsDefaultProtocolClient(PROTOCOL_NAME)
 
-const args = process.argv.slice(2)
-log.info('electron 启动参数', args)
-const options = yargs(process.argv.slice(2)).options({
+const argv = process.argv
+log.info('启动参数', argv)
+const args0 = argv.slice(0)
+const args1 = argv.slice(1)
+const args2 = argv.slice(2)
+log.info('args0', args0)
+log.info('args1', args1)
+log.info('args2', args2)
+const options = yargs(args2).options({
   ENV: { type: 'string' }
 }).argv
 log.log('electron 环境', options.ENV)
