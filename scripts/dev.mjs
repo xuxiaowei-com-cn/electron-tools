@@ -1,3 +1,5 @@
+// https://cn.vitejs.dev/guide/api-javascript.html
+
 import { spawn } from 'child_process'
 import { createServer } from 'vite'
 import electron from 'electron'
@@ -16,30 +18,36 @@ if (process.platform === 'win32') {
     })
 }
 
-const server = await createServer({ configFile: 'vite.config.ts', server: { host: true } });
-await server.listen();
+;(async () => {
 
-log.info(server.resolvedUrls)
+  const server = await createServer({
+    configFile: 'vite.config.ts',
+    server: { host: true }
+  })
+  await server.listen()
 
-process.env.VITE_URL = server.resolvedUrls.local[0]
+  server.printUrls()
+  process.env.VITE_URL = server.resolvedUrls.local[0]
 
-const electronProcess = spawn(electron.toString(), ['.', '--ENV=dev'], {
-    cwd: cwdDir, stdio: 'inherit',
-}) // electron 进程
+  const electronProcess = spawn(electron.toString(), ['.', '--ENV=dev'], {
+    cwd: cwdDir,
+    stdio: 'inherit',
+  }) // electron 进程
 
-// 延时监听 Electron 是否关闭
-const interval = setInterval(async function () {
+  // 延时监听 Electron 是否关闭
+  const interval = setInterval(async function () {
     if (electronProcess.exitCode === null) {
-        // 开发模式 正常运行
+      // 开发模式 正常运行
     } else {
-        if (electronProcess.exitCode === 0) {
-            log.info('开发模式 已关闭')
-        } else if (electronProcess.exitCode === 1) {
-            log.error('开发模式 意外退出')
-        } else {
-            log.error('开发模式 未知代码：', electronProcess.exitCode)
-        }
-        clearInterval(interval); // 取消延时
-        await server.close() // 关闭 vite
+      if (electronProcess.exitCode === 0) {
+        log.info('开发模式 已关闭')
+      } else if (electronProcess.exitCode === 1) {
+        log.error('开发模式 意外退出')
+      } else {
+        log.error('开发模式 未知代码：', electronProcess.exitCode)
+      }
+      clearInterval(interval) // 取消延时
+      await server.close() // 关闭 vite
     }
-}, 1000)
+  }, 1000)
+})()
