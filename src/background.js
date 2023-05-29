@@ -81,7 +81,12 @@ const createWindow = () => {
   } else { // 生产模式
     protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
       const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
-      const url = path.join(local, request.url.substring(PROTOCOL_NAME.length + 2))
+      let requestUrl = request.url.substring(PROTOCOL_NAME.length + 2)
+      // 删除 #
+      // 删除多余的 /
+      requestUrl = requestUrl.split('#')[0].replace(/^\/+/, '/')
+      // 拼接
+      const url = path.join(local, requestUrl)
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
