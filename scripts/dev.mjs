@@ -23,7 +23,7 @@ log.info(server.resolvedUrls)
 
 process.env.VITE_URL = server.resolvedUrls.local[0]
 
-const electronProcess = spawn(electron.toString(), ['.'], {
+const electronProcess = spawn(electron.toString(), ['.', '--ENV=dev'], {
     cwd: cwdDir, stdio: 'inherit',
 }) // electron 进程
 

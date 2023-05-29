@@ -4,6 +4,7 @@
 const { app, protocol, BrowserWindow } = require('electron')
 const path = require('path')
 const log = require('electron-log')
+const yargs = require('yargs')
 
 // 日志文件名
 // 日志位置：C:\Users\%USERPROFILE%\AppData\Roaming\electron-tools\logs
@@ -30,6 +31,13 @@ log.info('生产模式协议：', PROTOCOL_NAME)
 // 设置协议为默认客户端
 app.setAsDefaultProtocolClient(PROTOCOL_NAME)
 
+const args = process.argv.slice(2)
+log.info('electron 启动参数', args)
+const options = yargs(process.argv.slice(2)).options({
+  ENV: { type: 'string' }
+}).argv
+log.log('electron 环境', options.ENV)
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -47,17 +55,23 @@ const createWindow = () => {
     }).catch(response => {
       log.error('Vite URL 加载失败', response)
     })
-  } else if (process.env.VITE_PREVIEW_FILE) { // 预览模式
+  } else if (options.ENV === 'build_preview') { // 构建后预览模式
     protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
       const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
-      // log.info('预览模式 cwd', process.cwd())
-      // log.info('预览模式 __dirname', __dirname)
-      // log.info('预览模式 local', local)
-      const url = path.join(local, request.url.substring(PROTOCOL_NAME.length + 2))
+      // log.info('构建后预览模式 cwd', process.cwd())
+      // log.info('构建后预览模式 __dirname', __dirname)
+      // log.info('构建后预览模式 local', local)
+      let requestUrl = request.url.substring(PROTOCOL_NAME.length + 2)
+      // 删除 #
+      requestUrl = requestUrl.split('#')[0]
+      // 删除多余的 /
+      requestUrl = requestUrl.replace(/^\/+/, '/')
+      // 拼接
+      const url = path.join(local, requestUrl)
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
     })
-    mainWindow.loadURL(`${PROTOCOL_NAME}://${process.env.VITE_PREVIEW_FILE}`).then(() => {
+    mainWindow.loadURL(`${PROTOCOL_NAME}://dist/index.html`).then(() => {
       log.info('Vite 预览文件 加载成功')
     }).catch(response => {
       log.error('Vite 预览文件 加载失败', response)

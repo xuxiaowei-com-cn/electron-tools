@@ -4,12 +4,12 @@
   "description": "基于 vite、Electron 的工具箱",
   "main": "src/background.js",
   "scripts": {
-    "start": "electron .",
+    "start": "chcp 65001 && electron .",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "electron:dev": "node scripts/dev.mjs",
-    "electron:preview": "node scripts/preview.mjs",
+    "electron:build:preview": "vite build && chcp 65001 && electron . --ENV=build_preview",
     "electron:build": "vue-tsc --noEmit && vite build && electron-builder --config electron-builder.json5",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
     "prepare": "husky install"
@@ -37,7 +37,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-log": "4.4.8"
+    "electron-log": "4.4.8",
+    "yargs": "17.7.2"
   },
   "devDependencies": {
     "@element-plus/icons-vue": "2.1.0",
