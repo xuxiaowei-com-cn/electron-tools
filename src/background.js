@@ -64,14 +64,10 @@ const createWindow = () => {
   } else if (options.ENV === 'build_preview') { // 构建后预览模式
     protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
       const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
-      // log.info('构建后预览模式 cwd', process.cwd())
-      // log.info('构建后预览模式 __dirname', __dirname)
-      // log.info('构建后预览模式 local', local)
       let requestUrl = request.url.substring(PROTOCOL_NAME.length + 2)
       // 删除 #
-      requestUrl = requestUrl.split('#')[0]
       // 删除多余的 /
-      requestUrl = requestUrl.replace(/^\/+/, '/')
+      requestUrl = requestUrl.split('#')[0].replace(/^\/+/, '/')
       // 拼接
       const url = path.join(local, requestUrl)
       // eslint-disable-next-line n/no-callback-literal
@@ -85,9 +81,6 @@ const createWindow = () => {
   } else { // 生产模式
     protocol.registerFileProtocol(PROTOCOL_NAME, function (request, callback) {
       const local = __dirname.substring(0, __dirname.indexOf(path.sep + 'src'))
-      // log.info('生产模式 cwd', process.cwd())
-      // log.info('生产模式 __dirname', __dirname)
-      // log.info('生产模式 local', local)
       const url = path.join(local, request.url.substring(PROTOCOL_NAME.length + 2))
       // eslint-disable-next-line n/no-callback-literal
       callback({ path: url.toString() })
