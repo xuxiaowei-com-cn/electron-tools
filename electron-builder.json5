@@ -14,7 +14,7 @@
     "src/preload.js"
   ],
   "mac": {
-    "artifactName": "${productName}_${version}.${ext}",
+    "artifactName": "${productName}_${version}-${arch}.${ext}",
     "target": [
       "dmg"
     ]
@@ -29,6 +29,10 @@
         ]
       }
     ],
+    "artifactName": "${productName}_${version}-${arch}.${ext}"
+  },
+  "linux": {
+    "target": "AppImage",
     "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   "nsis": {
