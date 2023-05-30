@@ -65,6 +65,17 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
+      - name: windows Rename artifactName
+        if: ${{ matrix.os == 'windows-latest' }}
+        shell: powershell
+        run: |
+          # 准备打包的文件命名方式
+          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/'
+          # 修改为准备打包的文件命名方式
+          (Get-Content electron-builder.json5) -replace '\$\{productName\}_\$\{version\}\-\$\{arch\}\.\$\{ext\}', '${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}' | Set-Content electron-builder.json5
+          # 查看修改结果
+          cat electron-builder.json5
+
       - run: npm i
       - run: npm run build
       - run: npm run electron:build
