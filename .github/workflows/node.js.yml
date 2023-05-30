@@ -44,9 +44,13 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         shell: sh
         run: |
+          # 刪除特殊字符
           sed -i 's/\r$//' electron-builder.json5
+          # 准备打包的文件命名方式
           echo 's/${productName}_${version}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}.${ext}/'
+          # 修改为准备打包的文件命名方式
           sed -i 's/${productName}_${version}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}.${ext}/' electron-builder.json5
+          # 查看修改结果
           cat electron-builder.json5
 
       - run: npm i
