@@ -40,7 +40,7 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.node-version }}-
 
-      - name: ubuntu Rename artifactName
+      - name: Ubuntu Rename artifactName
         if: ${{ matrix.os == 'ubuntu-latest' }}
         shell: sh
         run: |
@@ -53,7 +53,7 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
-      - name: macos Rename artifactName
+      - name: Macos Rename artifactName
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           # 刪除特殊字符
@@ -65,7 +65,7 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
-      - name: windows Rename artifactName
+      - name: Windows Rename artifactName
         if: ${{ matrix.os == 'windows-latest' }}
         shell: powershell
         run: |
@@ -87,16 +87,16 @@ jobs:
         with:
           name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}
           path: |
-            electron-tools_1.0.0-node-16.x-x86_64.AppImage
-            electron-tools_1.0.0-node-16.x-ia32.exe
-            electron-tools_1.0.0-node-16.x-x64.exe
-            electron-tools_1.0.0-node-16.x.exe
-            electron-tools_1.0.0-node-16.x-x64.dmg
-            electron-tools_1.0.0-node-18.x-x86_64.AppImage
-            electron-tools_1.0.0-node-18.x-ia32.exe
-            electron-tools_1.0.0-node-18.x-x64.exe
-            electron-tools_1.0.0-node-18.x.exe
-            electron-tools_1.0.0-node-18.x-x64.dmg
+            release/1.0.0/electron-tools_1.0.0-node-16.x-x86_64.AppImage
+            release/1.0.0/electron-tools_1.0.0-node-16.x-ia32.exe
+            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.exe
+            release/1.0.0/electron-tools_1.0.0-node-16.x.exe
+            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.dmg
+            release/1.0.0/electron-tools_1.0.0-node-18.x-x86_64.AppImage
+            release/1.0.0/electron-tools_1.0.0-node-18.x-ia32.exe
+            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.exe
+            release/1.0.0/electron-tools_1.0.0-node-18.x.exe
+            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.dmg
 
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
