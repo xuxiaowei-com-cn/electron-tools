@@ -82,6 +82,21 @@ jobs:
       - run: ls release
       - run: ls release/1.0.0
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}
+          path: |
+            electron-tools_1.0.0-node-16.x-x86_64.AppImage
+            electron-tools_1.0.0-node-16.x-ia32.exe
+            electron-tools_1.0.0-node-16.x-x64.exe
+            electron-tools_1.0.0-node-16.x.exe
+            electron-tools_1.0.0-node-16.x-x64.dmg
+            electron-tools_1.0.0-node-18.x-x86_64.AppImage
+            electron-tools_1.0.0-node-18.x-ia32.exe
+            electron-tools_1.0.0-node-18.x-x64.exe
+            electron-tools_1.0.0-node-18.x.exe
+            electron-tools_1.0.0-node-18.x-x64.dmg
 
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
