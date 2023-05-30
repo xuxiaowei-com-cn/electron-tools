@@ -41,10 +41,12 @@ jobs:
             ${{ matrix.os }}-${{ matrix.node-version }}-
 
       - name: Rename artifactName
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         shell: sh
         run: |
           echo 's/${productName}_${version}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}.${ext}/'
           sed -i 's/${productName}_${version}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}.${ext}/' electron-builder.json5
+          cat electron-builder.json5
 
       - run: npm i
       - run: npm run build
