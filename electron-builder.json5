@@ -24,11 +24,12 @@
       {
         "target": "nsis",
         "arch": [
+          "ia32",
           "x64"
         ]
       }
     ],
-    "artifactName": "${productName}_${version}.${ext}"
+    "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   "nsis": {
     "oneClick": false,
