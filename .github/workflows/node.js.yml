@@ -40,6 +40,12 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.node-version }}-
 
+      - name: Rename artifactName
+        shell: sh
+        run: |
+          echo 's/${productName}_${version}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}.${ext}/'
+          sed -i 's/${productName}_${version}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}.${ext}/' electron-builder.json5
+
       - run: npm i
       - run: npm run build
       - run: npm run electron:build
