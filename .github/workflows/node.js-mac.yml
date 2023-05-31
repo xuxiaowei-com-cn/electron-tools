@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node-version: [ 16.x, v18.16.0 ]
+        node-version: [ v18.16.0 ]
         os: [ "macos-latest" ]
         arch: [x64, arm64]
 
@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.arch }}
+      - name: Use Node.js ${{ matrix.arch }} ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           architecture: ${{ matrix.arch }}
