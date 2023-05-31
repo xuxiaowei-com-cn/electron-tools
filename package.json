@@ -59,7 +59,7 @@
     "husky": "8.0.3",
     "sass": "1.62.1",
     "typescript": "5.0.4",
-    "unplugin-auto-import": "0.16.2",
+    "unplugin-auto-import": "0.16.4",
     "unplugin-vue-components": "0.24.1",
     "vite": "4.3.9",
     "vue": "3.3.4",
