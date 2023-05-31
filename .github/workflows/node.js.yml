@@ -155,6 +155,8 @@ jobs:
           name: electron-tools-windows-latest-18.x
           path: .
 
+      - run: ls
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
