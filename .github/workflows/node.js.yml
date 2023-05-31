@@ -88,13 +88,13 @@ jobs:
           ls ${HOME}/.cache
           ls ${HOME}/.cache/electron
           ls ${HOME}/.cache/electron-builder
+          ls ${HOME}/.cache/electron-builder/appimage
 
       - name: Macos ls electron
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           ls ${HOME}/Library/Caches
           ls ${HOME}/Library/Caches/electron
-          ls ${HOME}/Library/Caches/electron-builder
 
       - name: Windows ls electron
         if: ${{ matrix.os == 'windows-latest' }}
