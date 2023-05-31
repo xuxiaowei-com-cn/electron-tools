@@ -19,20 +19,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [ 16.x, 18.x ]
         os: [ "ubuntu-latest", "windows-latest", "macos-latest" ]
-        arch: [ x64, arm64 ]
-        exclude:
-          # npm i 错误：https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128115262/jobs/9224479187
-          - node-version: 16.x
-            os: ubuntu-latest
-            arch: arm64
-          # npm i 错误：https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128115262/jobs/9224479526
-          - node-version: 18.x
-            os: ubuntu-latest
-            arch: arm64
-          # Unable to find Node version '18.x' for platform win32 and architecture arm64：https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128115262/jobs/9224479631
-          - node-version: 18.x
-            os: windows-latest
-            arch: arm64
 
     steps:
       - name: Checkout repository
@@ -42,7 +28,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          architecture: ${{ matrix.arch }}
 
       - name: Cache modules
         uses: actions/cache@v3

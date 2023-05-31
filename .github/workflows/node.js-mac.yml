@@ -1,0 +1,75 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [ 16.x, 18.x ]
+        os: [ "macos-10.15" ]
+        arch: [x64, arm64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.arch }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          architecture: ${{ matrix.arch }}
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: |
+            ~/.npm
+            $GITHUB_WORKSPACE/node_modules/
+            # ubuntu
+            ${HOME}/.cache/electron
+            ${HOME}/.cache/electron-builder
+            # macos
+            ${HOME}/Library/Caches/electron
+            # windows
+            %USERPROFILE%\AppData\Local\electron
+            %USERPROFILE%\AppData\Local\electron-builder
+          key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ matrix.os }}-
+
+      - name: Macos Rename artifactName
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          # 刪除特殊字符
+          sed -i '' 's/\r$//' electron-builder.json5
+          # 准备打包的文件命名方式
+          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/'
+          # 修改为准备打包的文件命名方式
+          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/' electron-builder.json5
+          # 查看修改结果
+          cat electron-builder.json5
+
+      - run: npm i
+      - run: npm run build
+      - run: npm run electron:build
+      - run: ls release
+      - run: ls release/1.0.0
+
+      - name: Macos ls electron
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          ls ${HOME}/Library/Caches
+          ls ${HOME}/Library/Caches/electron
