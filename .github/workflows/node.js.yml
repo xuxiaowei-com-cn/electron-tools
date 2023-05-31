@@ -36,6 +36,14 @@ jobs:
           path: |
             ~/.npm
             $GITHUB_WORKSPACE/node_modules/
+            # ubuntu
+            ${HOME}/.cache/electron
+            ${HOME}/.cache/electron-builder
+            # macos
+            ${HOME}/Library/Caches/electron
+            # windows
+            %USERPROFILE%\AppData\Local\electron
+            %USERPROFILE%\AppData\Local\electron-builder
           key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.node-version }}-
@@ -101,7 +109,9 @@ jobs:
         shell: cmd
         run: |
           dir %USERPROFILE%\AppData\Local
+          dir %USERPROFILE%\AppData\Local\electron
           dir %USERPROFILE%\AppData\Local\electron\Cache
+          dir %USERPROFILE%\AppData\Local\electron-builder
           dir %USERPROFILE%\AppData\Local\electron-builder\Cache
 
       - name: Upload Artifacts
