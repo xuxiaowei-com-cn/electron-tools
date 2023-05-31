@@ -20,6 +20,11 @@ jobs:
         node-version: [ 16.x, 18.x ]
         os: [ "ubuntu-latest", "windows-latest", "macos-latest" ]
         arch: [ x64, arm64 ]
+        exclude:
+          # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128498312/jobs/9225241332
+          - arch: arm64
+            os: ubuntu-latest
+            node-version: 18.x
 
     steps:
       - name: Checkout repository
