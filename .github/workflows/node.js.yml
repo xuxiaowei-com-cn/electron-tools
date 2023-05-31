@@ -98,6 +98,82 @@ jobs:
             release/1.0.0/electron-tools_1.0.0-node-18.x.exe
             release/1.0.0/electron-tools_1.0.0-node-18.x-x64.dmg
 
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # if: startsWith(github.ref, 'refs/heads/main')
+    steps:
+
+      - name: Get current date
+        id: date
+        # bash, sh, cmd, powershell, pwsh
+        # shell 类型必须为 sh，否则：
+        # $GITHUB_ENV：仅支持 ubuntu、macos
+        # $env:GITHUB_ENV：仅支持 windows
+        shell: sh
+        run: |
+          echo "YEAR_MONTH_DAY=$(date +'%Y-%m-%dZ')" >> $GITHUB_ENV
+          echo "YEAR_MONTH_DAY_HOUR=$(date +'%Y-%m-%dT%HZ')" >> $GITHUB_ENV
+          echo "YEAR_MONTH_DAY_HOUR_MINUTE=$(date +'%Y-%m-%dT%H-%MZ')" >> $GITHUB_ENV
+
+      - name: Download Artifacts electron-tools-macos-latest-16.x
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-16.x
+
+      - name: Download Artifacts electron-tools-macos-latest-18.x
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-16.x
+
+      - name: Download Artifacts electron-tools-ubuntu-latest-16.x
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-16.x
+
+      - name: Download Artifacts electron-tools-ubuntu-latest-18.x
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-16.x
+
+      - name: Download Artifacts electron-tools-windows-latest-16.x
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-16.x
+
+      - name: Download Artifacts electron-tools-windows-latest-18.x
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-16.x
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: |
+            release/1.0.0/electron-tools_1.0.0-node-16.x-x86_64.AppImage
+            release/1.0.0/electron-tools_1.0.0-node-16.x-ia32.exe
+            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.exe
+            release/1.0.0/electron-tools_1.0.0-node-16.x.exe
+            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.dmg
+            release/1.0.0/electron-tools_1.0.0-node-18.x-x86_64.AppImage
+            release/1.0.0/electron-tools_1.0.0-node-18.x-ia32.exe
+            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.exe
+            release/1.0.0/electron-tools_1.0.0-node-18.x.exe
+            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.dmg
+          body:
+            自动推送时的发布
+          # draft: 草稿状态，为 true 时，不创建标签，默认为 false
+          # draft: true
+          # prerelease：是否发布预发布版，默认为 false
+          prerelease: true
+          name: 1.0.0-${{ env.YEAR_MONTH_DAY_HOUR_MINUTE }}
+          tag: v1.0.0-${{ env.YEAR_MONTH_DAY_HOUR_MINUTE }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
   # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
   dependabot:
     name: Dependabot
