@@ -48,6 +48,10 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-
 
+      - name: Show macOS version
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: sw_vers
+
       - name: Ubuntu Rename artifactName
         if: ${{ matrix.os == 'ubuntu-latest' }}
         shell: sh
