@@ -38,7 +38,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.os }} ${{ matrix.arch }}
+      - name: Use Node.js ${{ matrix.node-version }} !(macos-latest && arm64)
         uses: actions/setup-node@v3
         if: ${{ !(matrix.os == 'macos-latest' && matrix.arch == 'arm64') }}
         with:
@@ -46,7 +46,7 @@ jobs:
           architecture: ${{ matrix.arch }}
 
       # macos、arm64 默认为 node v18.16.0（不能设置 node-version 否则无法执行）
-      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.os }} ${{ matrix.arch }}
+      - name: Use Node.js ${{ matrix.node-version }} macos-latest arm64
         uses: actions/setup-node@v3
         if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
         with:
@@ -84,7 +84,7 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
-      - name: macOS Rename artifactName ${{ matrix.arch }}
+      - name: macOS Rename artifactName arm64
         if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
         run: |
           # 刪除特殊字符
@@ -96,7 +96,7 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
-      - name: macOS Rename artifactName ${{ matrix.arch }}
+      - name: macOS Rename artifactName !arm64
         if: ${{ matrix.os == 'macos-latest' && matrix.arch != 'arm64' }}
         run: |
           # 刪除特殊字符
@@ -132,6 +132,7 @@ jobs:
         run: ls release/*.*.*
       - name: Windows ls release
         if: ${{ matrix.os == 'windows-latest' }}
+        shell: cmd
         run: for /d %i in (release\*) do dir %i
 
       - name: Ubuntu ls electron
