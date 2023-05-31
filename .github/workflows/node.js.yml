@@ -82,6 +82,18 @@ jobs:
       - run: ls release
       - run: ls release/1.0.0
 
+      - name: Ubuntu Rename artifactName
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: ls ${HOME}/.cache/electron
+
+      - name: Macos Rename artifactName
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: ls ${HOME}/Library/Caches/electron
+
+      - name: Windows ls electron
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: dir %USERPROFILE%\AppData\Local\electron\Cache
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
