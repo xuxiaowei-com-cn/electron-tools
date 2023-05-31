@@ -37,6 +37,14 @@ jobs:
           - arch: arm64
             os: windows-latest
             node-version: 18.x
+          # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128542346/jobs/9225322231
+          - arch: arm64
+            os: macos-latest
+            node-version: 16.x
+          # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128542346/jobs/9225322524
+          - arch: arm64
+            os: macos-latest
+            node-version: 18.x
 
     steps:
       - name: Checkout repository
