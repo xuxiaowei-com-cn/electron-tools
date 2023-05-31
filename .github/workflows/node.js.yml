@@ -38,7 +38,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.arch }}
+      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.os }} ${{ matrix.arch }}
         uses: actions/setup-node@v3
         if: ${{ !(matrix.os == 'macos-latest' && matrix.arch == 'arm64') }}
         with:
@@ -46,7 +46,7 @@ jobs:
           architecture: ${{ matrix.arch }}
 
       # macos、arm64 默认为 node v18.16.0（不能设置 node-version 否则无法执行）
-      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.arch }}
+      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.os }} ${{ matrix.arch }}
         uses: actions/setup-node@v3
         if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
         with:
@@ -84,8 +84,20 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
-      - name: macOS Rename artifactName
-        if: ${{ matrix.os == 'macos-latest' }}
+      - name: macOS Rename artifactName ${{ matrix.arch }}
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
+        run: |
+          # 刪除特殊字符
+          sed -i '' 's/\r$//' electron-builder.json5
+          # 准备打包的文件命名方式
+          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/'
+          # 修改为准备打包的文件命名方式
+          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/' electron-builder.json5
+          # 查看修改结果
+          cat electron-builder.json5
+
+      - name: macOS Rename artifactName ${{ matrix.arch }}
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch != 'arm64' }}
         run: |
           # 刪除特殊字符
           sed -i '' 's/\r$//' electron-builder.json5
@@ -112,7 +124,15 @@ jobs:
       - run: npm run build
       - run: npm run electron:build
       - run: ls release
-      - run: ls release/*.*.*
+      - name: Ubuntu ls release
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: ls release/*.*.*
+      - name: macOS ls release
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: ls release/*.*.*
+      - name: Windows ls release
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: for /d %i in (release\*) do dir %i
 
       - name: Ubuntu ls electron
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -122,7 +142,7 @@ jobs:
           ls ${HOME}/.cache/electron-builder
           ls ${HOME}/.cache/electron-builder/appimage
 
-      - name: Macos ls electron
+      - name: macOS ls electron
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           ls ${HOME}/Library/Caches
