@@ -32,6 +32,7 @@ jobs:
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128542346/jobs/9225322231
           - arch: arm64
             os: macos-latest
+            node-version: 16.x
 
     steps:
       - name: Checkout repository
@@ -39,8 +40,16 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.arch }}
         uses: actions/setup-node@v3
+        if: ${{ !(matrix.os == 'macos-latest' && matrix.arch == 'arm64') }}
         with:
           node-version: ${{ matrix.node-version }}
+          architecture: ${{ matrix.arch }}
+
+      # macos、arm64 默认为 node v18.16.0（不能设置 node-version 否则无法执行）
+      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.arch }}
+        uses: actions/setup-node@v3
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
+        with:
           architecture: ${{ matrix.arch }}
 
       - name: Cache modules
@@ -61,19 +70,6 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ matrix.os }}-
-
-      - name: Show Ubuntu version
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: lsb_release -a
-
-      - name: Show macOS version
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: sw_vers
-
-      - name: Show Windows version
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: |
-          systeminfo
 
       - name: Ubuntu Rename artifactName
         if: ${{ matrix.os == 'ubuntu-latest' }}
