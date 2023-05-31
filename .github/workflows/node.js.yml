@@ -73,7 +73,6 @@ jobs:
       - name: Show Windows version
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          ver
           systeminfo
 
       - name: Ubuntu Rename artifactName
