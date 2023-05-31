@@ -161,16 +161,16 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            release/1.0.0/electron-tools_1.0.0-node-16.x-x86_64.AppImage
-            release/1.0.0/electron-tools_1.0.0-node-16.x-ia32.exe
-            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.exe
-            release/1.0.0/electron-tools_1.0.0-node-16.x.exe
-            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.dmg
-            release/1.0.0/electron-tools_1.0.0-node-18.x-x86_64.AppImage
-            release/1.0.0/electron-tools_1.0.0-node-18.x-ia32.exe
-            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.exe
-            release/1.0.0/electron-tools_1.0.0-node-18.x.exe
-            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.dmg
+            electron-tools_1.0.0-node-16.x-x86_64.AppImage
+            electron-tools_1.0.0-node-16.x-ia32.exe
+            electron-tools_1.0.0-node-16.x-x64.exe
+            electron-tools_1.0.0-node-16.x.exe
+            electron-tools_1.0.0-node-16.x-x64.dmg
+            electron-tools_1.0.0-node-18.x-x86_64.AppImage
+            electron-tools_1.0.0-node-18.x-ia32.exe
+            electron-tools_1.0.0-node-18.x-x64.exe
+            electron-tools_1.0.0-node-18.x.exe
+            electron-tools_1.0.0-node-18.x-x64.dmg
           body:
             自动推送时的发布
           # draft: 草稿状态，为 true 时，不创建标签，默认为 false
