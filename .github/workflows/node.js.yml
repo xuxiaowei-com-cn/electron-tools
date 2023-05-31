@@ -46,7 +46,7 @@ jobs:
             %USERPROFILE%\AppData\Local\electron-builder
           key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
-            ${{ matrix.os }}-${{ matrix.node-version }}-
+            ${{ matrix.os }}-
 
       - name: Ubuntu Rename artifactName
         if: ${{ matrix.os == 'ubuntu-latest' }}
