@@ -22,29 +22,17 @@ jobs:
         arch: [ x64, arm64 ]
         exclude:
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128498312/jobs/9225241332
-          - arch: arm64
-            os: ubuntu-latest
-            node-version: 18.x
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128523146/jobs/9225286730
           - arch: arm64
             os: ubuntu-latest
-            node-version: 16.x
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128523146/jobs/9225286883
-          - arch: arm64
-            os: windows-latest
-            node-version: 16.x
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128534557/jobs/9225307705
           - arch: arm64
             os: windows-latest
-            node-version: 18.x
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128542346/jobs/9225322231
           - arch: arm64
             os: macos-latest
             node-version: 16.x
-          # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128542346/jobs/9225322524
-          - arch: arm64
-            os: macos-latest
-            node-version: 18.x
 
     steps:
       - name: Checkout repository
@@ -75,9 +63,19 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-
 
+      - name: Show Ubuntu version
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: lsb_release -a
+
       - name: Show macOS version
         if: ${{ matrix.os == 'macos-latest' }}
         run: sw_vers
+
+      - name: Show Windows version
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          ver
+          systeminfo
 
       - name: Ubuntu Rename artifactName
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -120,7 +118,7 @@ jobs:
       - run: npm run build
       - run: npm run electron:build
       - run: ls release
-      - run: ls release/1.0.0
+      - run: ls release/*.*.*
 
       - name: Ubuntu ls electron
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -151,16 +149,16 @@ jobs:
         with:
           name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.arch }}
           path: |
-            release/1.0.0/electron-tools_1.0.0-node-16.x-x86_64.AppImage
-            release/1.0.0/electron-tools_1.0.0-node-16.x-ia32.exe
-            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.exe
-            release/1.0.0/electron-tools_1.0.0-node-16.x.exe
-            release/1.0.0/electron-tools_1.0.0-node-16.x-x64.dmg
-            release/1.0.0/electron-tools_1.0.0-node-18.x-x86_64.AppImage
-            release/1.0.0/electron-tools_1.0.0-node-18.x-ia32.exe
-            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.exe
-            release/1.0.0/electron-tools_1.0.0-node-18.x.exe
-            release/1.0.0/electron-tools_1.0.0-node-18.x-x64.dmg
+            release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
+            release/*.*.*/electron-tools_*.*.*-node-16.x-ia32.exe
+            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.exe
+            release/*.*.*/electron-tools_*.*.*-node-16.x.exe
+            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.dmg
+            release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
+            release/*.*.*/electron-tools_*.*.*-node-18.x-ia32.exe
+            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.exe
+            release/*.*.*/electron-tools_*.*.*-node-18.x.exe
+            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.dmg
 
 
   publish:
@@ -225,16 +223,16 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            electron-tools_1.0.0-node-16.x-x86_64.AppImage
-            electron-tools_1.0.0-node-16.x-ia32.exe
-            electron-tools_1.0.0-node-16.x-x64.exe
-            electron-tools_1.0.0-node-16.x.exe
-            electron-tools_1.0.0-node-16.x-x64.dmg
-            electron-tools_1.0.0-node-18.x-x86_64.AppImage
-            electron-tools_1.0.0-node-18.x-ia32.exe
-            electron-tools_1.0.0-node-18.x-x64.exe
-            electron-tools_1.0.0-node-18.x.exe
-            electron-tools_1.0.0-node-18.x-x64.dmg
+            electron-tools_*.*.*-node-16.x-x86_64.AppImage
+            electron-tools_*.*.*-node-16.x-ia32.exe
+            electron-tools_*.*.*-node-16.x-x64.exe
+            electron-tools_*.*.*-node-16.x.exe
+            electron-tools_*.*.*-node-16.x-x64.dmg
+            electron-tools_*.*.*-node-18.x-x86_64.AppImage
+            electron-tools_*.*.*-node-18.x-ia32.exe
+            electron-tools_*.*.*-node-18.x-x64.exe
+            electron-tools_*.*.*-node-18.x.exe
+            electron-tools_*.*.*-node-18.x-x64.dmg
           body:
             自动推送时的发布
           # draft: 草稿状态，为 true 时，不创建标签，默认为 false
