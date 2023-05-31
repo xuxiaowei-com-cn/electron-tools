@@ -19,15 +19,17 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [ 16.x, 18.x ]
         os: [ "ubuntu-latest", "windows-latest", "macos-latest" ]
+        arch: [ x64, arm64 ]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }} ${{ matrix.arch }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          architecture: ${{ matrix.arch }}
 
       - name: Cache modules
         uses: actions/cache@v3
@@ -65,7 +67,7 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
-      - name: Macos Rename artifactName
+      - name: macOS Rename artifactName
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           # 刪除特殊字符
@@ -88,6 +90,7 @@ jobs:
           # 查看修改结果
           cat electron-builder.json5
 
+      - run: node -v
       - run: npm i
       - run: npm run build
       - run: npm run electron:build
@@ -121,7 +124,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}
+          name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.arch }}
           path: |
             release/1.0.0/electron-tools_1.0.0-node-16.x-x86_64.AppImage
             release/1.0.0/electron-tools_1.0.0-node-16.x-ia32.exe
