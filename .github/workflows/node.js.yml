@@ -132,8 +132,8 @@ jobs:
         run: ls release/*.*.*
       - name: Windows ls release
         if: ${{ matrix.os == 'windows-latest' }}
-        shell: cmd
-        run: for /d %i in (release\*) do dir %i
+        shell: pwsh
+        run: Get-ChildItem -Path ./release/*/ -Directory | ForEach-Object { Get-ChildItem -Path $_.FullName }
 
       - name: Ubuntu ls electron
         if: ${{ matrix.os == 'ubuntu-latest' }}
