@@ -204,6 +204,7 @@ jobs:
           path: .
 
       - run: ls
+      - run: find / -name electron-tools_1.0.0-node-16.x-x64.dmg
 
       - name: Download Artifacts electron-tools-macos-latest-18.x-arm64
         uses: actions/download-artifact@v3
