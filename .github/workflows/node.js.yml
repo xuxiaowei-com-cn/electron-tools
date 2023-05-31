@@ -127,27 +127,27 @@ jobs:
       - name: Download Artifacts electron-tools-macos-latest-18.x
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-16.x
+          name: electron-tools-macos-latest-18.x
 
       - name: Download Artifacts electron-tools-ubuntu-latest-16.x
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-16.x
+          name: electron-tools-ubuntu-latest-16.x
 
       - name: Download Artifacts electron-tools-ubuntu-latest-18.x
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-16.x
+          name: electron-tools-ubuntu-latest-18.x
 
       - name: Download Artifacts electron-tools-windows-latest-16.x
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-16.x
+          name: electron-tools-windows-latest-16.x
 
       - name: Download Artifacts electron-tools-windows-latest-18.x
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-16.x
+          name: electron-tools-windows-latest-18.x
 
       - name: Create Release
         uses: ncipollo/release-action@v1
