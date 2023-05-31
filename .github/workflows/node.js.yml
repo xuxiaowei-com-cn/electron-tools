@@ -203,11 +203,15 @@ jobs:
           name: electron-tools-macos-latest-16.x-x64
           path: .
 
+      - run: ls
+
       - name: Download Artifacts electron-tools-macos-latest-18.x-arm64
         uses: actions/download-artifact@v3
         with:
           name: electron-tools-macos-latest-18.x-arm64
           path: .
+
+      - run: ls
 
       - name: Download Artifacts electron-tools-macos-latest-18.x-x64
         uses: actions/download-artifact@v3
@@ -215,11 +219,15 @@ jobs:
           name: electron-tools-macos-latest-18.x-x64
           path: .
 
+      - run: ls
+
       - name: Download Artifacts electron-tools-ubuntu-latest-16.x-x64
         uses: actions/download-artifact@v3
         with:
           name: electron-tools-ubuntu-latest-16.x-x64
           path: .
+
+      - run: ls
 
       - name: Download Artifacts electron-tools-ubuntu-latest-18.x-x64
         uses: actions/download-artifact@v3
@@ -227,11 +235,15 @@ jobs:
           name: electron-tools-ubuntu-latest-18.x-x64
           path: .
 
+      - run: ls
+
       - name: Download Artifacts electron-tools-windows-latest-16.x-x64
         uses: actions/download-artifact@v3
         with:
           name: electron-tools-windows-latest-16.x-x64
           path: .
+
+      - run: ls
 
       - name: Download Artifacts electron-tools-windows-latest-18.x-x64
         uses: actions/download-artifact@v3
