@@ -1,0 +1,5 @@
+stages:
+  - sync
+
+include:
+  - /sync.yml
