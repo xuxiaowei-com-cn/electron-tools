@@ -7,6 +7,7 @@ build:node:16.20.0:
   stage: build
   image: node:16.20.0
   script:
+    - npm config get cache
     - npm i
     - npm run build
     - npm run electron:build
