@@ -11,6 +11,7 @@
     "electron:dev": "node scripts/dev.mjs",
     "electron:preview": "node scripts/preview.mjs",
     "electron:build": "vue-tsc --noEmit && vite build && electron-builder --config electron-builder.json5",
+    "electron:build:linux:deb": "vue-tsc --noEmit && vite build && electron-builder --config electron-builder.json5 --linux deb",
     "electron:build:win:ia32": "vue-tsc --noEmit && vite build && electron-builder --config electron-builder.json5 --windows nsis:ia32",
     "electron:build:win:x64": "vue-tsc --noEmit && vite build && electron-builder --config electron-builder.json5 --windows nsis:x64",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
