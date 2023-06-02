@@ -34,10 +34,12 @@ jobs:
             os: macos-latest
             node-version: 16.x
     env:
+      # npm 缓存路径
+      NPM_CONFIG_CACHE: ~/.cache
       # electron 缓存路径
-      ELECTRON_CACHE: $GITHUB_WORKSPACE/.cache/electron/cache
+      ELECTRON_CACHE: ~/.electron/cache
       # electron-builder 缓存路径
-      ELECTRON_BUILDER_CACHE: $GITHUB_WORKSPACE/.cache/electron-builder/cache
+      ELECTRON_BUILDER_CACHE: ~/.electron-builder/cache
 
     steps:
       - name: Checkout repository
@@ -69,8 +71,10 @@ jobs:
         with:
           path: |
             ~/.npm
+            ~/.cache
+            ~/.electron/cache
+            ~/.electron-builder/cache
             $GITHUB_WORKSPACE/node_modules/
-            $GITHUB_WORKSPACE/.cache
           key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ matrix.os }}-
