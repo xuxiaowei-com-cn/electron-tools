@@ -17,7 +17,7 @@ build:node:16.20.0:
     - npm i
     - npm run build
     - npm run electron:build
-    - npm run electron:linux:deb
+    - npm run electron:build:linux:deb
     - ls release
     - ls release/*.*.*
   cache:
@@ -53,7 +53,7 @@ build:node:18.16.0:
     - npm i
     - npm run build
     - npm run electron:build
-    - npm run electron:linux:deb
+    - npm run electron:build:linux:deb
     - ls release
     - ls release/*.*.*
   cache:
