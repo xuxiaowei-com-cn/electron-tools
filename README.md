@@ -65,4 +65,5 @@ npm i -D @element-plus/icons-vue @typescript-eslint/eslint-plugin @typescript-es
 
 - [electron-builder](https://www.electron.build)
     - [Command Line Interface (CLI)](https://www.electron.build/cli)
+    - [Publish](https://www.electron.build/configuration/publish)
 - [package.json](https://docs.npmjs.com/cli/v9/configuring-npm/package-json)
