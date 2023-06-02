@@ -74,7 +74,6 @@ jobs:
             ~/.cache
             ~/.electron/cache
             ~/.electron-builder/cache
-            $GITHUB_WORKSPACE/node_modules/
           key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ matrix.os }}-
