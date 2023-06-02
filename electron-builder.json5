@@ -32,7 +32,10 @@
     "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   "linux": {
-    "target": "AppImage",
+    "target": [
+      "AppImage",
+      "tar.xz"
+    ],
     "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   "nsis": {
