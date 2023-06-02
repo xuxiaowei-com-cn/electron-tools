@@ -24,6 +24,7 @@ build:node:16.20.0:
     - npm run build
     - npm run electron:build
     - npm run electron:build:linux:deb
+    - npm run electron:build:linux:rpm
     - ls release
     - ls release/*.*.*
   cache:
@@ -34,6 +35,7 @@ build:node:16.20.0:
   artifacts:
     name: "${CI_JOB_NAME}"
     paths:
+      - release/**/**.rpm
       - release/**/**.deb
       - release/**/**.AppImage
       - release/**/**.tar.xz
@@ -67,6 +69,7 @@ build:node:18.16.0:
     - npm run build
     - npm run electron:build
     - npm run electron:build:linux:deb
+    - npm run electron:build:linux:rpm
     - ls release
     - ls release/*.*.*
   cache:
@@ -77,6 +80,7 @@ build:node:18.16.0:
   artifacts:
     name: "${CI_JOB_NAME}"
     paths:
+      - release/**/**.rpm
       - release/**/**.deb
       - release/**/**.AppImage
       - release/**/**.tar.xz
