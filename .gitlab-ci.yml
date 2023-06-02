@@ -25,7 +25,7 @@ build:node:16.20.0:
     - npm run electron:build
     - npm run electron:build:linux:deb
     - apt-get update
-    - apt-get install rpm
+    - apt-get install -y rpm
     - npm run electron:build:linux:rpm
     - ls release
     - ls release/*.*.*
@@ -72,7 +72,7 @@ build:node:18.16.0:
     - npm run electron:build
     - npm run electron:build:linux:deb
     - apt-get update
-    - apt-get install rpm
+    - apt-get install -y rpm
     - npm run electron:build:linux:rpm
     - ls release
     - ls release/*.*.*
