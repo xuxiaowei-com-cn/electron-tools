@@ -34,8 +34,6 @@ jobs:
             os: macos-latest
             node-version: 16.x
     env:
-      # npm 缓存路径
-      NPM_CONFIG_CACHE: $GITHUB_WORKSPACE/.cache
       # electron 缓存路径
       ELECTRON_CACHE: $GITHUB_WORKSPACE/.cache/electron/cache
       # electron-builder 缓存路径
