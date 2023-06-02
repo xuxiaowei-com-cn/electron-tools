@@ -38,7 +38,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://jihulab.com/xuxiaowei-com-cn/electron-tools.git"
+    "url": "https://jihulab.com/xuxiaowei-com-cn/electron-tools.git"
   },
   "license": "MIT",
   "dependencies": {
