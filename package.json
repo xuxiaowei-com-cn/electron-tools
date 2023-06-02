@@ -22,16 +22,18 @@
   },
   "homepage": "https://github.com/xuxiaowei-com-cn/electron-tools",
   "keywords": [
-    "electron-log",
+    "axios",
     "electron",
     "electron-builder",
+    "electron-log",
     "element-plus",
     "eslint",
     "sass",
     "typescript",
     "vite",
     "vue",
-    "vue-router"
+    "vue-router",
+    "yargs"
   ],
   "repository": {
     "type": "git",
