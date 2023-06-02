@@ -134,8 +134,9 @@ jobs:
       - name: electron:build (ubuntu-latest)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
-          npm run electron:build:linux:deb
           npm run electron:build
+          npm run electron:build:linux:deb
+          npm run electron:build:linux:rpm
 
       - run: ls release
       - name: Ubuntu ls release
