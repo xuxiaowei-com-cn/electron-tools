@@ -50,6 +50,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
+      // webSecurity：默认值：true，设置为 false 则会允许所有跨域，不支持热加载
       preload: path.join(__dirname, 'preload.js')
     }
   })
@@ -85,6 +86,25 @@ const createWindow = () => {
       log.error('Vite 生产文件 加载失败', response)
     })
   }
+
+  // 完成加载
+  mainWindow.webContents.on('did-finish-load', () => {
+    const beforeSendFilter = { urls: ['https://www.baidu.com/**'] }
+    mainWindow.webContents.session.webRequest.onBeforeSendHeaders(beforeSendFilter, (details, callback) => {
+      // 发给 https://www.baidu.com/** 修改请求头 User-Agent
+      details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/111 (KHTML, like Gecko) electron-tools/222 Chrome/333 Electron/444 Safari/555'
+      // eslint-disable-next-line n/no-callback-literal
+      callback({ cancel: false, requestHeaders: details.requestHeaders })
+    })
+
+    const receivedFilter = { urls: ['https://www.baidu.com/**'] }
+    mainWindow.webContents.session.webRequest.onHeadersReceived(receivedFilter, (details, callback) => {
+      // https://www.baidu.com/** 的响应修改 Access-Control-Allow-Origin
+      details.responseHeaders['Access-Control-Allow-Origin'] = ['*']
+      // eslint-disable-next-line n/no-callback-literal
+      callback({ cancel: false, responseHeaders: details.responseHeaders })
+    })
+  })
 
   if (!app.isPackaged) { // 是否打包
     // Open the DevTools.
