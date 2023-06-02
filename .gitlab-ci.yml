@@ -14,7 +14,7 @@ build:node:16.20.0:
     # electron-builder 缓存路径
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
-    - node_version=`node -v`
+    - export node_version=`node -v`
     - echo ${node_version}
     - npm i
     # 准备打包的文件命名方式
@@ -57,7 +57,7 @@ build:node:18.16.0:
     # electron-builder 缓存路径
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
-    - node_version=`node -v`
+    - export node_version=`node -v`
     - echo ${node_version}
     - npm i
     # 准备打包的文件命名方式
