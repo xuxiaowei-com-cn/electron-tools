@@ -47,7 +47,6 @@ jobs:
         run: |
           echo $NPM_CONFIG_CACHE
           echo $ELECTRON_CACHE
-          echo $ELECTRON_BUILDER_CACHE
 
       - name: Use Node.js ${{ matrix.node-version }} !(macos-latest && arm64)
         uses: actions/setup-node@v3
