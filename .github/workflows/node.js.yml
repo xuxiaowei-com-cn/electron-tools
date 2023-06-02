@@ -33,10 +33,23 @@ jobs:
           - arch: arm64
             os: macos-latest
             node-version: 16.x
+    env:
+      # npm 缓存路径
+      NPM_CONFIG_CACHE: $GITHUB_WORKSPACE/.cache
+      # electron 缓存路径
+      ELECTRON_CACHE: $GITHUB_WORKSPACE/.cache/electron/cache
+      # electron-builder 缓存路径
+      ELECTRON_BUILDER_CACHE: $GITHUB_WORKSPACE/.cache/electron-builder/cache
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Print Environment Variables
+        run: |
+          echo $NPM_CONFIG_CACHE
+          echo $ELECTRON_CACHE
+          echo $ELECTRON_BUILDER_CACHE
 
       - name: Use Node.js ${{ matrix.node-version }} !(macos-latest && arm64)
         uses: actions/setup-node@v3
@@ -59,14 +72,7 @@ jobs:
           path: |
             ~/.npm
             $GITHUB_WORKSPACE/node_modules/
-            # ubuntu
-            ${HOME}/.cache/electron
-            ${HOME}/.cache/electron-builder
-            # macos
-            ${HOME}/Library/Caches/electron
-            # windows
-            %USERPROFILE%\AppData\Local\electron
-            %USERPROFILE%\AppData\Local\electron-builder
+            $GITHUB_WORKSPACE/.cache
           key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ matrix.os }}-
@@ -135,29 +141,6 @@ jobs:
         shell: pwsh
         run: Get-ChildItem -Path ./release/*/ -Directory | ForEach-Object { Get-ChildItem -Path $_.FullName }
 
-      - name: Ubuntu ls electron
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          ls ${HOME}/.cache
-          ls ${HOME}/.cache/electron
-          ls ${HOME}/.cache/electron-builder
-          ls ${HOME}/.cache/electron-builder/appimage
-
-      - name: macOS ls electron
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          ls ${HOME}/Library/Caches
-          ls ${HOME}/Library/Caches/electron
-
-      - name: Windows ls electron
-        if: ${{ matrix.os == 'windows-latest' }}
-        shell: cmd
-        run: |
-          dir %USERPROFILE%\AppData\Local
-          dir %USERPROFILE%\AppData\Local\electron
-          dir %USERPROFILE%\AppData\Local\electron\Cache
-          dir %USERPROFILE%\AppData\Local\electron-builder
-          dir %USERPROFILE%\AppData\Local\electron-builder\Cache
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
