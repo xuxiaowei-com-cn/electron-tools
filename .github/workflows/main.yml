@@ -13,6 +13,7 @@ jobs:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [ 16.x, 18.x ]
+        arch: [ x64 ]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,6 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          architecture: ${{ matrix.arch }}
 
       - name: Install dependencies
         run: npm i
