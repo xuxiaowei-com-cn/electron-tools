@@ -130,9 +130,10 @@ jobs:
       - run: npm run build
       - run: npm run electron:build
 
-      - name: Ubuntu build deb
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: npm run electron:build:linux:deb
+      # 无法执行
+      # - name: Ubuntu build deb
+      #   if: ${{ matrix.os == 'ubuntu-latest' }}
+      #   run: npm run electron:build:linux:deb
 
       - run: ls release
       - name: Ubuntu ls release
