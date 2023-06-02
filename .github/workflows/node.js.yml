@@ -159,6 +159,7 @@ jobs:
             release/*.*.*/electron-tools_*.*.*-node-16.x-amd64.deb
             release/*.*.*/electron-tools_*.*.*-node-16.x-x64.tar.xz
             release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
+            release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.rpm
             release/*.*.*/electron-tools_*.*.*-node-16.x-ia32.exe
             release/*.*.*/electron-tools_*.*.*-node-16.x-x64.exe
             release/*.*.*/electron-tools_*.*.*-node-16.x.exe
@@ -166,6 +167,7 @@ jobs:
             release/*.*.*/electron-tools_*.*.*-node-18.x-amd64.deb
             release/*.*.*/electron-tools_*.*.*-node-18.x-x64.tar.xz
             release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
+            release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.rpm
             release/*.*.*/electron-tools_*.*.*-node-18.x-ia32.exe
             release/*.*.*/electron-tools_*.*.*-node-18.x-x64.exe
             release/*.*.*/electron-tools_*.*.*-node-18.x.exe
@@ -258,6 +260,7 @@ jobs:
             *.*.*/electron-tools_*.*.*-node-16.x-amd64.deb
             *.*.*/electron-tools_*.*.*-node-16.x-x64.tar.xz
             *.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
+            *.*.*/electron-tools_*.*.*-node-16.x-x86_64.rpm
             *.*.*/electron-tools_*.*.*-node-16.x-ia32.exe
             *.*.*/electron-tools_*.*.*-node-16.x-x64.exe
             *.*.*/electron-tools_*.*.*-node-16.x.exe
@@ -265,6 +268,7 @@ jobs:
             *.*.*/electron-tools_*.*.*-node-18.x-amd64.deb
             *.*.*/electron-tools_*.*.*-node-18.x-x64.tar.xz
             *.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
+            *.*.*/electron-tools_*.*.*-node-18.x-x86_64.rpm
             *.*.*/electron-tools_*.*.*-node-18.x-ia32.exe
             *.*.*/electron-tools_*.*.*-node-18.x-x64.exe
             *.*.*/electron-tools_*.*.*-node-18.x.exe
