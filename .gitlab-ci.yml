@@ -6,6 +6,9 @@ stages:
 build:node:16.20.0:
   stage: build
   image: node:16.20.0
+  variables:
+    # npm 缓存路径
+    NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.cache
   script:
     - npm config get cache
     - npm i
@@ -16,6 +19,7 @@ build:node:16.20.0:
     - ls /root/.cache/
     - ls $HOME/.npm/
     - ls ~/.cache/
+    - ls .cache/
     - find / -name electron-v25.0.1-linux-x64.zip
     - find / -name appimage
     - find / -name appimage-12.0.1
@@ -27,6 +31,7 @@ build:node:16.20.0:
       - /root/.cache/
       - $HOME/.npm/
       - ~/.cache/
+      - .cache/
       - ~/.electron
       - ~/.electron-builder-binaries
   artifacts:
