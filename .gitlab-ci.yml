@@ -16,6 +16,8 @@ build:node:16.20.0:
   script:
     - export node_version=`node -v`
     - echo ${node_version}
+    - echo "export node_version=$node_version" >> /etc/profile
+    - source /etc/profile
     - npm i
     # 准备打包的文件命名方式
     - echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${node_version}-${arch}.${ext}/'
@@ -59,6 +61,8 @@ build:node:18.16.0:
   script:
     - export node_version=`node -v`
     - echo ${node_version}
+    - echo "export node_version=$node_version" >> /etc/profile
+    - source /etc/profile
     - npm i
     # 准备打包的文件命名方式
     - echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${node_version}-${arch}.${ext}/'
