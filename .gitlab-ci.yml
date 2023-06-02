@@ -14,15 +14,13 @@ build:node:16.20.0:
     # electron-builder 缓存路径
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
-    - export node_version=`node -v`
+    - node_version=`node -v`
     - echo ${node_version}
-    - echo "export node_version=$node_version" >> /etc/profile
-    - source /etc/profile
     - npm i
     # 准备打包的文件命名方式
-    - echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${node_version}-${arch}.${ext}/'
+    - echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-'"${node_version}"'-${arch}.${ext}/'
     # 修改为准备打包的文件命名方式
-    - sed -i 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${node_version}-${arch}.${ext}/' electron-builder.json5
+    - sed -i 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-'"${node_version}"'-${arch}.${ext}/' electron-builder.json5
     - npm run build
     - npm run electron:build
     - npm run electron:build:linux:deb
@@ -59,15 +57,13 @@ build:node:18.16.0:
     # electron-builder 缓存路径
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
-    - export node_version=`node -v`
+    - node_version=`node -v`
     - echo ${node_version}
-    - echo "export node_version=$node_version" >> /etc/profile
-    - source /etc/profile
     - npm i
     # 准备打包的文件命名方式
-    - echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${node_version}-${arch}.${ext}/'
+    - echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-'"${node_version}"'-${arch}.${ext}/'
     # 修改为准备打包的文件命名方式
-    - sed -i 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${node_version}-${arch}.${ext}/' electron-builder.json5
+    - sed -i 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-'"${node_version}"'-${arch}.${ext}/' electron-builder.json5
     - npm run build
     - npm run electron:build
     - npm run electron:build:linux:deb
