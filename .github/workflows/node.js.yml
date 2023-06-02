@@ -33,13 +33,13 @@ jobs:
           - arch: arm64
             os: macos-latest
             node-version: 16.x
-    env:
-      # npm 缓存路径
-      NPM_CONFIG_CACHE: $GITHUB_WORKSPACE/.cache
-      # electron 缓存路径
-      ELECTRON_CACHE: $GITHUB_WORKSPACE/.cache/electron/cache
-      # electron-builder 缓存路径
-      ELECTRON_BUILDER_CACHE: $GITHUB_WORKSPACE/.cache/electron-builder/cache
+#    env:
+#      # npm 缓存路径
+#      NPM_CONFIG_CACHE: $GITHUB_WORKSPACE/.cache
+#      # electron 缓存路径
+#      ELECTRON_CACHE: $GITHUB_WORKSPACE/.cache/electron/cache
+#      # electron-builder 缓存路径
+#      ELECTRON_BUILDER_CACHE: $GITHUB_WORKSPACE/.cache/electron-builder/cache
 
     steps:
       - name: Checkout repository
@@ -65,17 +65,17 @@ jobs:
         with:
           architecture: ${{ matrix.arch }}
 
-      - name: Cache modules
-        uses: actions/cache@v3
-        id: cache-modules
-        with:
-          path: |
-            ~/.npm
-            $GITHUB_WORKSPACE/node_modules/
-            $GITHUB_WORKSPACE/.cache
-          key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
-          restore-keys: |
-            ${{ matrix.os }}-
+#      - name: Cache modules
+#        uses: actions/cache@v3
+#        id: cache-modules
+#        with:
+#          path: |
+#            ~/.npm
+#            $GITHUB_WORKSPACE/node_modules/
+#            $GITHUB_WORKSPACE/.cache
+#          key: ${{ matrix.os }}-${{ hashFiles('package.json') }}
+#          restore-keys: |
+#            ${{ matrix.os }}-
 
       - name: Ubuntu Rename artifactName
         if: ${{ matrix.os == 'ubuntu-latest' }}
