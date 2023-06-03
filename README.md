@@ -30,6 +30,36 @@
 | electron:build:linux:rpm | ❌           | ✅          | ❌                                 |
 | electron:build           | ❌           | ❌          | ✅                                 |
 
+## 发布 & 更新
+
+- [scheme.json](https://github.com/electron-userland/electron-builder/blob/master/packages/app-builder-lib/scheme.json)
+- S3 [electron-builder.json5](electron-builder.json5) 配置如下
+    - publish：发布的配置，支持与 mac、win、linux 平级，也支持在 mac、win、linux 中单独配置
+        - provider：发布到 S3 时的值为 s3
+        - bucket：S3 的 bucket 名称
+        - acl：S3 对象储存权限（可能存在无法修改的情况，推荐自己设置文件夹权限），枚举：private、public-read
+        - path：S3 对象储存的文件夹，支持的环境变量：platform（平台）、version（版本号）、channel（渠道）等
+        - region：S3 对象储存的区域（亚马逊），非亚马逊对象储存固定为 us-east-1 即可
+        - endpoint：S3 对象储存的端点（桶）
+        - channel：渠道，默认：latest
+    - AWS_ACCESS_KEY_ID：环境变量，S3 对象储存的 Access Key，当存在参数为 `--publish always` 时，自动根据环境变量和配置上传产物
+    - AWS_SECRET_ACCESS_KEY：环境变量，S3 对象储存的 Secret Key，当存在参数为 `--publish always` 时，自动根据环境变量和配置上传产物
+    ```json5
+    {
+      "publish": [
+        {
+          "provider": "s3",
+          "bucket": "electron-tools",
+          "acl": "public-read",
+          "path": "/${platform}/${channel}/",
+          "region": "us-east-1",
+          "endpoint": "http://192.168.0.29:9000/",
+          "channel": "latest",
+        }
+      ]
+    }
+    ```
+
 ## Init & Configuration
 
 - Init
@@ -82,4 +112,8 @@ npm i -D @element-plus/icons-vue @typescript-eslint/eslint-plugin @typescript-es
 - [electron-builder](https://www.electron.build)
     - [Command Line Interface (CLI)](https://www.electron.build/cli)
     - [Publish](https://www.electron.build/configuration/publish)
-- [package.json](https://docs.npmjs.com/cli/v9/configuring-npm/package-json)
+- [about-npm](https://docs.npmjs.com/about-npm)
+    - [configuring-npm](https://docs.npmjs.com/cli/v9/configuring-npm)
+        - [package.json](https://docs.npmjs.com/cli/v9/configuring-npm/package-json)
+- [electron-builder](https://github.com/electron-userland/electron-builder)
+    - [scheme.json](https://github.com/electron-userland/electron-builder/blob/master/packages/app-builder-lib/scheme.json)

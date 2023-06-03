@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/quick-start#recap
 // Modules to control application life and create native browser window
 const { app, protocol, BrowserWindow } = require('electron')
+const { autoUpdater } = require('electron-updater')
 const path = require('path')
 const log = require('electron-log')
 const yargs = require('yargs')
@@ -18,8 +19,9 @@ log.transports.file.fileName = 'background.log'
 // 日志文件大小，默认：1048576（1M），超过此大小后会将现有日志移动到 *.old.log，删除当前文件。设置为 0 后，禁用此功能
 // log.transports.file.maxSize =
 
-// 创建多实例日志，log2 同 log
-// const log2 = log.create('log2')
+// 创建多实例日志，仅用于储存 electron-updater 的日志，updater 同 log
+const logUpdater = log.create('updater')
+logUpdater.transports.file.fileName = 'updater.log'
 
 // 日志范围
 // const userLog = log.scope('user')
@@ -44,9 +46,11 @@ const options = yargs(args2).options({
 }).argv
 log.log('electron 环境', options.ENV)
 
+let mainWindow
+
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -123,6 +127,36 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  autoUpdater.on('checking-for-update', () => {
+    logUpdater.info('checking-for-update 正在检查更新')
+    mainWindow.webContents.send('electron-updater-message', '正在检查更新...')
+  })
+  autoUpdater.on('update-available', (info) => {
+    logUpdater.info('update-available 有可用更新', info)
+    mainWindow.webContents.send('electron-updater-message', '有可用更新。')
+  })
+  autoUpdater.on('update-not-available', (info) => {
+    logUpdater.info('update-not-available 无可用更新', info)
+    mainWindow.webContents.send('electron-updater-message', '无可用更新。')
+  })
+  autoUpdater.on('error', (err) => {
+    logUpdater.error('error 自动更新程序中出错', err)
+    mainWindow.webContents.send('electron-updater-message', '自动更新程序中出错：' + err)
+  })
+  autoUpdater.on('download-progress', (progressInfo) => {
+    logUpdater.info('download-progress 下载进度', progressInfo)
+    let logMessage = '下载速度：' + progressInfo.bytesPerSecond
+    logMessage = logMessage + ' - 下载 ' + progressInfo.percent + '%'
+    logMessage = logMessage + ' (' + progressInfo.transferred + '/' + progressInfo.total + ')'
+    mainWindow.webContents.send('electron-updater-message', logMessage)
+  })
+  autoUpdater.on('update-downloaded', (info) => {
+    logUpdater.info('update-downloaded 下载完成', info)
+    mainWindow.webContents.send('electron-updater-message', '更新已下载，退出程序后，自动提示安装')
+    // 退出并安装
+    // autoUpdater.quitAndInstall()
+  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -134,3 +168,18 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+app.on('ready', function () {
+  // 强制开发中检查更新（需要再项目根目录中添加 dev-app-update.yml 文件，可参考打包后的产物中查找 app-update.yml 并做相应的修改，用于指定开发中检查更新的配置）
+  // autoUpdater.forceDevUpdateConfig = true
+  // 启动项目后，立即检查更新
+  autoUpdater.checkForUpdatesAndNotify().then(updateCheckResult => {
+    logUpdater.info('checkForUpdatesAndNotify 检查更新并通知', updateCheckResult)
+  })
+  // 每隔 5 分钟，检查一次更新
+  setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify().then(updateCheckResult => {
+      logUpdater.info('checkForUpdatesAndNotify 检查更新并通知', updateCheckResult)
+    })
+  }, 1000 * 60 * 5)
+})
