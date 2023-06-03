@@ -5,7 +5,8 @@ stages:
 
 build:node:16.20.0:
   stage: build
-  image: node:16.20.0
+  # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
+  image: xuxiaoweicomcn/node-rpm:16.20.0
   variables:
     # npm 缓存路径
     NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.cache
@@ -24,8 +25,9 @@ build:node:16.20.0:
     - npm run build
     - npm run electron:build
     - npm run electron:build:linux:deb
-    - apt-get update
-    - apt-get install -y rpm
+    # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
+    # - apt-get update
+    # - apt-get install -y rpm
     - npm run electron:build:linux:rpm
     - ls release
     - ls release/*.*.*
@@ -53,7 +55,8 @@ build:node:16.20.0:
 
 build:node:18.16.0:
   stage: build
-  image: node:18.16.0
+  # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
+  image: xuxiaoweicomcn/node-rpm:18.16.0
   variables:
     # npm 缓存路径
     NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.cache
@@ -72,8 +75,9 @@ build:node:18.16.0:
     - npm run build
     - npm run electron:build
     - npm run electron:build:linux:deb
-    - apt-get update
-    - apt-get install -y rpm
+    # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
+    # - apt-get update
+    # - apt-get install -y rpm
     - npm run electron:build:linux:rpm
     - ls release
     - ls release/*.*.*
