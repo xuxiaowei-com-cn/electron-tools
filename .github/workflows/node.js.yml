@@ -157,6 +157,7 @@ jobs:
           name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.arch }}
           path: |
             release/*.*.*/electron-tools_*.*.*-node-16.x-amd64.deb
+            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.tar.gz
             release/*.*.*/electron-tools_*.*.*-node-16.x-x64.tar.xz
             release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
             release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.rpm
@@ -165,6 +166,7 @@ jobs:
             release/*.*.*/electron-tools_*.*.*-node-16.x.exe
             release/*.*.*/electron-tools_*.*.*-node-16.x-x64.dmg
             release/*.*.*/electron-tools_*.*.*-node-18.x-amd64.deb
+            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.tar.gz
             release/*.*.*/electron-tools_*.*.*-node-18.x-x64.tar.xz
             release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
             release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.rpm
@@ -258,6 +260,7 @@ jobs:
         with:
           artifacts: |
             *.*.*/electron-tools_*.*.*-node-16.x-amd64.deb
+            *.*.*/electron-tools_*.*.*-node-16.x-x64.tar.gz
             *.*.*/electron-tools_*.*.*-node-16.x-x64.tar.xz
             *.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
             *.*.*/electron-tools_*.*.*-node-16.x-x86_64.rpm
@@ -266,6 +269,7 @@ jobs:
             *.*.*/electron-tools_*.*.*-node-16.x.exe
             *.*.*/electron-tools_*.*.*-node-16.x-x64.dmg
             *.*.*/electron-tools_*.*.*-node-18.x-amd64.deb
+            *.*.*/electron-tools_*.*.*-node-18.x-x64.tar.gz
             *.*.*/electron-tools_*.*.*-node-18.x-x64.tar.xz
             *.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
             *.*.*/electron-tools_*.*.*-node-18.x-x86_64.rpm

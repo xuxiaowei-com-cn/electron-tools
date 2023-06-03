@@ -40,6 +40,7 @@ build:node:16.20.0:
       - release/**/**.rpm
       - release/**/**.deb
       - release/**/**.AppImage
+      - release/**/**.tar.gz
       - release/**/**.tar.xz
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
@@ -87,6 +88,7 @@ build:node:18.16.0:
       - release/**/**.rpm
       - release/**/**.deb
       - release/**/**.AppImage
+      - release/**/**.tar.gz
       - release/**/**.tar.xz
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
