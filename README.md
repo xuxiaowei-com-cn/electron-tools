@@ -33,6 +33,42 @@
 ## 发布 & 更新
 
 - [scheme.json](https://github.com/electron-userland/electron-builder/blob/master/packages/app-builder-lib/scheme.json)
+
+- GitHub [electron-builder.json5](electron-builder.json5) 配置如下
+    - GH_TOKEN：环境变量，访问 [New personal access token (classic)](https://github.com/settings/tokens/new) 创建 Token，范围
+      `repo`
+    - GitHub 地址配置（二选一）
+        - [package.json](package.json)（不推荐，需要在 GitHub 页面设置为 release 发布，才能有自动更新）
+          ```json5
+          {
+            "repository": {
+              "type": "git",
+              "url": "git+https://github.com/xuxiaowei-com-cn/electron-tools.git"
+            }
+          }
+          ```
+        - [electron-builder.json5](electron-builder.json5)（推荐，优先级更高，可指定为 release 发布，自动支持自动更新，无需在
+          GitHub 页面设置）
+            - publish：发布的配置，支持与 mac、win、linux 平级，也支持在 mac、win、linux 中单独配置
+                - provider：发布到 GitHub 时的值为 github
+                - owner：GitHub 用户名或组织名称
+                - repo：仓库名称
+                - channel：渠道，默认：latest
+                - releaseType：发布类型，默认：draft。draft：草稿，prerelease：预发布，release：发布
+          ```json5
+          {
+            "publish": [
+              {
+                "provider": "github",
+                "owner": "xuxiaowei-com-cn",
+                "repo": "electron-tools",
+                "channel": "latest",
+                "releaseType": "release"
+              }
+            ]
+          }
+          ```
+
 - S3 [electron-builder.json5](electron-builder.json5) 配置如下
     - publish：发布的配置，支持与 mac、win、linux 平级，也支持在 mac、win、linux 中单独配置
         - provider：发布到 S3 时的值为 s3
@@ -68,7 +104,7 @@
           "path": "/${platform}/${channel}/",
           "region": "us-east-1",
           "endpoint": "http://192.168.0.29:9000/",
-          "channel": "latest",
+          "channel": "latest"
         }
       ]
     }
