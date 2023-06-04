@@ -125,13 +125,19 @@ jobs:
           name: electron-tools-${{ matrix.os }}-${{ matrix.arch }}
           path: |
             release/*/*.exe
+            release/*/*.exe.blockmap
             release/*/*.dmg
+            release/*/*.dmg.blockmap
             release/*/*.rpm
+            release/*/*.rpm.blockmap
             release/*/*.deb
+            release/*/*.deb.blockmap
             release/*/*.AppImage
+            release/*/*.AppImage.blockmap
             release/*/*.tar.gz
+            release/*/*.tar.gz.blockmap
             release/*/*.tar.xz
-            release/*/*.blockmap
+            release/*/*.tar.xz.blockmap
             release/*/alpha.yml
             release/*/beta.yml
             release/*/dev.yml
@@ -207,15 +213,23 @@ jobs:
         with:
           artifacts: |
             */*.exe
+            */*.exe.blockmap
             */*.dmg
+            */*.dmg.blockmap
             arm64/*/*.dmg
+            arm64/*/*.dmg.blockmap
             x64/*/*.dmg
+            x64/*/*.dmg.blockmap
             */*.rpm
+            */*.rpm.blockmap
             */*.deb
+            */*.deb.blockmap
             */*.AppImage
+            */*.AppImage.blockmap
             */*.tar.gz
+            */*.tar.gz.blockmap
             */*.tar.xz
-            */*.blockmap
+            */*.tar.xz.blockmap
             */alpha.yml
             */beta.yml
             */dev.yml
