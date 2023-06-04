@@ -1,8 +1,8 @@
 // background.js
 // https://www.electronjs.org/docs/latest/tutorial/quick-start#recap
 // Modules to control application life and create native browser window
-const { app, protocol, BrowserWindow } = require('electron')
-const { autoUpdater } = require('electron-updater')
+const { app, protocol, BrowserWindow, Notification } = require('electron')
+const { autoUpdater, AppUpdater } = require('electron-updater')
 const path = require('path')
 const log = require('electron-log')
 const yargs = require('yargs')
@@ -186,8 +186,15 @@ app.on('ready', function () {
   // 强制开发中检查更新（需要再项目根目录中添加 dev-app-update.yml 文件，可参考打包后的产物中查找 app-update.yml 并做相应的修改，用于指定开发中检查更新的配置）
   // autoUpdater.forceDevUpdateConfig = true
   // 启动项目后，立即检查更新
-  autoUpdater.checkForUpdatesAndNotify().then(updateCheckResult => {
-    logUpdater.info('checkForUpdatesAndNotify 检查更新并通知', updateCheckResult)
+  autoUpdater.checkForUpdates().then((updateCheckResult) => {
+    logUpdater.info('checkForUpdates 检查更新', updateCheckResult)
+    updateCheckResult.downloadPromise.then(() => {
+      const notificationContent = AppUpdater.formatDownloadNotification(updateCheckResult.updateInfo.version, app.name, {
+        title: '新的更新已准备好安装',
+        body: '{appName} 版本 {version} 已下载，将在退出时自动安装'
+      })
+      new (Notification)(notificationContent).show()
+    })
   })
   // 每隔 5 分钟，检查一次更新
   setInterval(() => {
