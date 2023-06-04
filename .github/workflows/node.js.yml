@@ -77,7 +77,7 @@ jobs:
       - run: npm run build
 
       - name: electron:build (macos-latest x64)
-        if: ${{ matrix.os == 'macos-latest' && matrix.arch = 'x64' }}
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'x64' }}
         run: |
           npm run electron:build
 
