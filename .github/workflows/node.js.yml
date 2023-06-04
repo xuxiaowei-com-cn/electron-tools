@@ -87,9 +87,9 @@ jobs:
           # 刪除特殊字符
           sed -i '' 's/\r$//' electron-builder.json5
           # 准备打包的文件命名方式
-          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/'
+          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-arm64.${ext}/'
           # 修改为准备打包的文件命名方式
-          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/' electron-builder.json5
+          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-arm64.${ext}/' electron-builder.json5
           # 查看修改结果
           cat electron-builder.json5
           npm run electron:build
@@ -138,12 +138,12 @@ jobs:
             release/**/rc.yml
             release/**/stable.yml
             release/**/latest.yml
-            release/**/alpha.*.yml
-            release/**/beta.*.yml
-            release/**/dev.*.yml
-            release/**/rc.*.yml
-            release/**/stable.*.yml
-            release/**/latest.*.yml  
+            release/**/alpha-*.yml
+            release/**/beta-*.yml
+            release/**/dev-*.yml
+            release/**/rc-*.yml
+            release/**/stable-*.yml
+            release/**/latest-*.yml  
 
 
   publish:
@@ -222,12 +222,12 @@ jobs:
             **/rc.yml
             **/stable.yml
             **/latest.yml
-            **/alpha.*.yml
-            **/beta.*.yml
-            **/dev.*.yml
-            **/rc.*.yml
-            **/stable.*.yml
-            **/latest.*.yml
+            **/alpha-*.yml
+            **/beta-*.yml
+            **/dev-*.yml
+            **/rc-*.yml
+            **/stable-*.yml
+            **/latest-*.yml
           body:
             自动推送时的发布
           # draft: 草稿状态，为 true 时，不创建标签，默认为 false
