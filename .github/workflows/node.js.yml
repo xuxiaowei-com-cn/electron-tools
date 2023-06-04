@@ -196,6 +196,7 @@ jobs:
           path: ./arm64
 
       - run: ls ./arm64/*.*.*
+      - run: cat ./arm64/latest-mac.yml
       - run: ls *.*.*
 
       - name: Download Artifacts electron-tools-macos-latest-x64
@@ -205,8 +206,11 @@ jobs:
           path: ./x64
 
       - run: ls ./x64/*.*.*
+      - run: cat ./x64/latest-mac.yml
       - run: ls *.*.*
 
+      - run: (cat x64/latest-mac.yml | sed '/files:/q') > latest-mac.yml && cat arm64/latest-mac.yml | grep '  - url\|    sha512\|    size' >> latest-mac.yml && cat x64/latest-mac.yml | sed -n '/files:/,$p' | tail -n +2 >> latest-mac.yml
+      - run: cat latest-mac.yml
 
       - name: Create Release
         uses: ncipollo/release-action@v1
