@@ -11,8 +11,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-// 更新消息
+// //////////////////// 自动更新 开始 ////////////////////
+
 ipcRenderer.on('electron-updater-message', function (event, text) {
   const electronUpdaterMessage = document.getElementById('electron-updater-message')
   electronUpdaterMessage.innerHTML = text
 })
+
+// //////////////////// 自动更新 结束 ////////////////////

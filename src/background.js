@@ -127,6 +127,35 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+})
+
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit()
+})
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and require them here.
+
+// //////////////////// 自动更新 开始 ////////////////////
+
+app.on('ready', function () {
+  // 强制开发中检查更新（需要再项目根目录中添加 dev-app-update.yml 文件，可参考打包后的产物中查找 app-update.yml 并做相应的修改，用于指定开发中检查更新的配置）
+  // autoUpdater.forceDevUpdateConfig = true
+
+  // 启动项目后，立即检查更新
+  autoUpdater.checkForUpdates().then((updateCheckResult) => {
+    checkForUpdates(updateCheckResult)
+  })
+
+  // 每隔 5 分钟，检查一次更新
+  setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify().then(updateCheckResult => {
+      checkForUpdates(updateCheckResult)
+    })
+  }, 1000 * 60 * 5)
 
   autoUpdater.on('checking-for-update', () => {
     logUpdater.info('checking-for-update 正在检查更新')
@@ -155,6 +184,7 @@ app.whenReady().then(() => {
     logMessage += ' (' + transferredFormatBytes + '/' + totalFormatBytes + ')'
     mainWindow.webContents.send('electron-updater-message', logMessage)
   })
+
   autoUpdater.on('update-downloaded', (info) => {
     logUpdater.info('update-downloaded 下载完成', info)
     mainWindow.webContents.send('electron-updater-message', '更新已下载，退出程序后，自动提示安装')
@@ -163,15 +193,18 @@ app.whenReady().then(() => {
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+function checkForUpdates (updateCheckResult) {
+  logUpdater.info('checkForUpdates 检查更新', updateCheckResult)
+  if (updateCheckResult != null) {
+    updateCheckResult.downloadPromise.then(() => {
+      const notificationContent = AppUpdater.formatDownloadNotification(updateCheckResult.updateInfo.version, app.name, {
+        title: '新的更新已准备好安装',
+        body: '{appName} 版本 {version} 已下载，将在退出时自动安装'
+      })
+      new (Notification)(notificationContent).show()
+    })
+  }
+}
 
 function formatBytes (bytes, decimals = 2) {
   if (bytes === 0) return '0 Bytes'
@@ -182,26 +215,4 @@ function formatBytes (bytes, decimals = 2) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 
-app.on('ready', function () {
-  // 强制开发中检查更新（需要再项目根目录中添加 dev-app-update.yml 文件，可参考打包后的产物中查找 app-update.yml 并做相应的修改，用于指定开发中检查更新的配置）
-  // autoUpdater.forceDevUpdateConfig = true
-  // 启动项目后，立即检查更新
-  autoUpdater.checkForUpdates().then((updateCheckResult) => {
-    logUpdater.info('checkForUpdates 检查更新', updateCheckResult)
-    if (updateCheckResult != null) {
-      updateCheckResult.downloadPromise.then(() => {
-        const notificationContent = AppUpdater.formatDownloadNotification(updateCheckResult.updateInfo.version, app.name, {
-          title: '新的更新已准备好安装',
-          body: '{appName} 版本 {version} 已下载，将在退出时自动安装'
-        })
-        new (Notification)(notificationContent).show()
-      })
-    }
-  })
-  // 每隔 5 分钟，检查一次更新
-  setInterval(() => {
-    autoUpdater.checkForUpdatesAndNotify().then(updateCheckResult => {
-      logUpdater.info('checkForUpdatesAndNotify 检查更新并通知', updateCheckResult)
-    })
-  }, 1000 * 60 * 5)
-})
+// //////////////////// 自动更新 结束 ////////////////////
