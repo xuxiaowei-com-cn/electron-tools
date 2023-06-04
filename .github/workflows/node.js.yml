@@ -76,8 +76,26 @@ jobs:
       - run: npm i
       - run: npm run build
 
-      - name: electron:build !(ubuntu-latest)
-        if: ${{ matrix.os != 'ubuntu-latest' }}
+      - name: electron:build (macos-latest x64)
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch = 'x64' }}
+        run: |
+          npm run electron:build
+
+      - name: electron:build (macos-latest arm64)
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch = 'arm64' }}
+        run: |
+          # 刪除特殊字符
+          sed -i '' 's/\r$//' electron-builder.json5
+          # 准备打包的文件命名方式
+          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/'
+          # 修改为准备打包的文件命名方式
+          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/' electron-builder.json5
+          # 查看修改结果
+          cat electron-builder.json5
+          npm run electron:build
+
+      - name: electron:build (windows-latest)
+        if: ${{ matrix.os == 'windows-latest' }}
         run: |
           npm run electron:build
 
@@ -107,7 +125,7 @@ jobs:
           name: electron-tools-${{ matrix.os }}-${{ matrix.arch }}
           path: |
             release/**/**.exe
-            release/**/**.rpm
+            release/**/**.dmg
             release/**/**.rpm
             release/**/**.deb
             release/**/**.AppImage
@@ -142,36 +160,36 @@ jobs:
           echo "YEAR_MONTH_DAY_HOUR=$(date +'%Y-%m-%dT%HZ')" >> $GITHUB_ENV
           echo "YEAR_MONTH_DAY_HOUR_MINUTE=$(date +'%Y-%m-%dT%H-%MZ')" >> $GITHUB_ENV
 
-      - name: Download Artifacts electron-tools-macos-latest-18.x-arm64
+      - name: Download Artifacts electron-tools-macos-latest-arm64
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-18.x-arm64
+          name: electron-tools-macos-latest-arm64
+          path: ./arm64
+
+      - run: ls ./arm64/*.*.*
+      - run: ls *.*.*
+
+      - name: Download Artifacts electron-tools-macos-latest-x64
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-macos-latest-x64
+          path: ./x64
+
+      - run: ls ./x64/*.*.*
+      - run: ls *.*.*
+
+      - name: Download Artifacts electron-tools-ubuntu-latest-x64
+        uses: actions/download-artifact@v3
+        with:
+          name: electron-tools-ubuntu-latest-x64
           path: .
 
       - run: ls *.*.*
 
-      - name: Download Artifacts electron-tools-macos-latest-18.x-x64
+      - name: Download Artifacts electron-tools-windows-latest-x64
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-18.x-x64
-          path: .
-
-      - run: ls *.*.*
-
-      - name: Download Artifacts electron-tools-ubuntu-latest-18.x-x64
-        uses: actions/download-artifact@v3
-        with:
-          name: electron-tools-ubuntu-latest-18.x-x64
-          path: .
-
-      - run: ls *.*.*
-
-      - run: ls *.*.*
-
-      - name: Download Artifacts electron-tools-windows-latest-18.x-x64
-        uses: actions/download-artifact@v3
-        with:
-          name: electron-tools-windows-latest-18.x-x64
+          name: electron-tools-windows-latest-x64
           path: .
 
       - run: ls *.*.*
@@ -181,7 +199,9 @@ jobs:
         with:
           artifacts: |
             **/**.exe
-            **/**.rpm
+            **/**.dmg
+            arm64/**/**.dmg
+            x64/**/**.dmg
             **/**.rpm
             **/**.deb
             **/**.AppImage
