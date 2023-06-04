@@ -16,12 +16,12 @@ build:node:18.16.0:
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
     - npm i
-    - cat electron-builder.json5
     - npm run build
     # 增加 .rpm 产物
     # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
     # - apt-get update
     # - apt-get install -y rpm
+    - cat electron-builder.json5
     - sed -i '/"AppImage",/i \ \ \ \ \ \ "rpm",' electron-builder.json5
     - cat electron-builder.json5
     - npm run electron:build
