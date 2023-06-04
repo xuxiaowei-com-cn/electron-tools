@@ -94,21 +94,38 @@
             - 仅发布 32 产物，运行 `npm run electron:build:win:ia32:release`
             - 仅发布 64 产物，运行 `npm run electron:build:win:x64:release`
             - 同时发布 32、64 产物，运行 `npm run electron:build:win:release`
-    ```json5
-    {
-      "publish": [
+    - MinIO
+        ```json5
         {
-          "provider": "s3",
-          "bucket": "electron-tools",
-          "acl": "public-read",
-          "path": "/${platform}/${channel}/",
-          "region": "us-east-1",
-          "endpoint": "http://192.168.0.29:9000/",
-          "channel": "latest"
+          "publish": [
+            {
+              "provider": "s3",
+              "bucket": "electron-tools",
+              "acl": "public-read",
+              "path": "/${platform}/${channel}/",
+              "region": "us-east-1",
+              "endpoint": "http://192.168.0.29:9000/",
+              "channel": "latest"
+            }
+          ]
         }
-      ]
-    }
-    ```
+        ```
+    - OSS（阿里云对象储存）
+        - endpoint：阿里云对象储存 OSS 的 endpoint 为上述 MinIO 对象储存的 https://{bucket}.{endpoint}
+        - bucket：阿里云对象储存 OSS 的 bucket 为上述 MinIO 对象储存 bucket 内部的 path
+        ```json5
+        {
+          "publish": [
+            {
+              "provider": "s3",
+              "bucket": "/",
+              "path": "/${platform}/${channel}/",
+              "endpoint": "https://public-electron-tools.oss-cn-qingdao.aliyuncs.com",
+              "channel": "latest"
+            }
+          ]
+        }
+        ```
 
 ## Init & Configuration
 
