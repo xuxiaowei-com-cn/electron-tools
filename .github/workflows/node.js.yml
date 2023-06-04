@@ -124,20 +124,26 @@ jobs:
         with:
           name: electron-tools-${{ matrix.os }}-${{ matrix.arch }}
           path: |
-            release/**/**.exe
-            release/**/**.dmg
-            release/**/**.rpm
-            release/**/**.deb
-            release/**/**.AppImage
-            release/**/**.tar.gz
-            release/**/**.tar.xz
-            release/**/**.blockmap
-            release/**/**.alpha.yml
-            release/**/**.beta.yml
-            release/**/**.dev.yml
-            release/**/**.rc.yml
-            release/**/**.stable.yml
-            release/**/**.latest.yml
+            release/**/electron_tools_**.exe
+            release/**/electron_tools_**.dmg
+            release/**/electron_tools_**.rpm
+            release/**/electron_tools_**.deb
+            release/**/electron_tools_**.AppImage
+            release/**/electron_tools_**.tar.gz
+            release/**/electron_tools_**.tar.xz
+            release/**/electron_tools_**.blockmap
+            release/**/alpha.yml
+            release/**/beta.yml
+            release/**/dev.yml
+            release/**/rc.yml
+            release/**/stable.yml
+            release/**/latest.yml
+            release/**/alpha.*.yml
+            release/**/beta.*.yml
+            release/**/dev.*.yml
+            release/**/rc.*.yml
+            release/**/stable.*.yml
+            release/**/latest.*.yml  
 
 
   publish:
@@ -200,22 +206,28 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            **/**.exe
-            **/**.dmg
-            arm64/**/**.dmg
-            x64/**/**.dmg
-            **/**.rpm
-            **/**.deb
-            **/**.AppImage
-            **/**.tar.gz
-            **/**.tar.xz
-            **/**.blockmap
-            **/**.alpha.yml
-            **/**.beta.yml
-            **/**.dev.yml
-            **/**.rc.yml
-            **/**.stable.yml
-            **/**.latest.yml
+            **/electron_tools_**.exe
+            **/electron_tools_**.dmg
+            arm64/**/electron_tools_**.dmg
+            x64/**/electron_tools_**.dmg
+            **/electron_tools_**.rpm
+            **/electron_tools_**.deb
+            **/electron_tools_**.AppImage
+            **/electron_tools_**.tar.gz
+            **/electron_tools_**.tar.xz
+            **/electron_tools_**.blockmap
+            **/alpha.yml
+            **/beta.yml
+            **/dev.yml
+            **/rc.yml
+            **/stable.yml
+            **/latest.yml
+            **/alpha.*.yml
+            **/beta.*.yml
+            **/dev.*.yml
+            **/rc.*.yml
+            **/stable.*.yml
+            **/latest.*.yml
           body:
             自动推送时的发布
           # draft: 草稿状态，为 true 时，不创建标签，默认为 false
