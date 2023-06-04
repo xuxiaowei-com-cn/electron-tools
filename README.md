@@ -44,6 +44,20 @@
         - channel：渠道，默认：latest
     - AWS_ACCESS_KEY_ID：环境变量，S3 对象储存的 Access Key，当存在参数为 `--publish always` 时，自动根据环境变量和配置上传产物
     - AWS_SECRET_ACCESS_KEY：环境变量，S3 对象储存的 Secret Key，当存在参数为 `--publish always` 时，自动根据环境变量和配置上传产物
+    - 在 Windows 上运行 `npm run electron:build:release`
+      ，将会打包并上传到 http://192.168.0.29:9000/electron-tools/win32/latest/ 以下文件（以 1.0.0 版本为例）
+        - electron-tools_1.0.0-ia32.exe：仅支持在 32 位系统上运行
+        - electron-tools_1.0.0-ia32.exe.blockmap
+        - electron-tools_1.0.0-x64.exe：仅支持在 64 位系统上运行
+        - electron-tools_1.0.0-x64.exe.blockmap
+        - electron-tools_1.0.0.exe：同时支持在 32、64 位系统上运行
+        - electron-tools_1.0.0.exe.blockmap
+        - latest.yml：版本信息
+            - 每次发布时，此文件将会被新版覆盖
+            - 项目检查更新时，会获取此文件与当前启动项目对比
+            - 仅发布 32 产物，运行 `npm run electron:build:win:ia32:release`
+            - 仅发布 64 产物，运行 `npm run electron:build:win:x64:release`
+            - 同时发布 32、64 产物，运行 `npm run electron:build:win:release`
     ```json5
     {
       "publish": [
@@ -68,10 +82,11 @@
 npm create vite@latest electron-tools -- --template vue-ts
 ```
 
-- Electron
+- Electron 镜像
 
 ```shell
-npm config set ELECTRON_MIRROR https://npm.taobao.org/mirrors/electron/
+npm config set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
+npm config set ELECTRON_BUILDER_BINARIES_MIRROR=https://npmmirror.com/mirrors/electron-builder-binaries/
 npm i -D electron
 ```
 
