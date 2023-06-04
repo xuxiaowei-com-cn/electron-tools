@@ -145,10 +145,14 @@ app.whenReady().then(() => {
     mainWindow.webContents.send('electron-updater-message', '自动更新程序中出错：' + err)
   })
   autoUpdater.on('download-progress', (progressInfo) => {
-    logUpdater.info('download-progress 下载进度', progressInfo)
-    let logMessage = '下载速度：' + progressInfo.bytesPerSecond
-    logMessage = logMessage + ' - 下载 ' + progressInfo.percent + '%'
-    logMessage = logMessage + ' (' + progressInfo.transferred + '/' + progressInfo.total + ')'
+    const transferredFormatBytes = formatBytes(progressInfo.transferred)
+    const totalFormatBytes = formatBytes(progressInfo.total)
+    const bytesPerSecondFormatBytes = formatBytes(progressInfo.bytesPerSecond)
+    const percentFixed = progressInfo.percent.toFixed(2)
+    logUpdater.info('download-progress 下载进度', totalFormatBytes, percentFixed + '%', bytesPerSecondFormatBytes + '/s', '(' + transferredFormatBytes + '/' + totalFormatBytes + ')', progressInfo)
+    let logMessage = '下载速度：' + bytesPerSecondFormatBytes + '/s'
+    logMessage += ' - 下载 ' + percentFixed + '%'
+    logMessage += ' (' + transferredFormatBytes + '/' + totalFormatBytes + ')'
     mainWindow.webContents.send('electron-updater-message', logMessage)
   })
   autoUpdater.on('update-downloaded', (info) => {
@@ -168,6 +172,15 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+function formatBytes (bytes, decimals = 2) {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
 
 app.on('ready', function () {
   // 强制开发中检查更新（需要再项目根目录中添加 dev-app-update.yml 文件，可参考打包后的产物中查找 app-update.yml 并做相应的修改，用于指定开发中检查更新的配置）
