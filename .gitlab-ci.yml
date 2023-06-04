@@ -33,19 +33,32 @@ build:node:18.16.0:
   artifacts:
     name: "${CI_JOB_NAME}"
     paths:
-      - release/**/**.exe
-      - release/**/**.rpm
-      - release/**/**.deb
-      - release/**/**.AppImage
-      - release/**/**.tar.gz
-      - release/**/**.tar.xz
-      - release/**/**.blockmap
-      - release/**/**.alpha.yml
-      - release/**/**.beta.yml
-      - release/**/**.dev.yml
-      - release/**/**.rc.yml
-      - release/**/**.stable.yml
-      - release/**/**.latest.yml
+      - release/*/*.exe
+      - release/*/*.exe.blockmap
+      - release/*/*.dmg
+      - release/*/*.dmg.blockmap
+      - release/*/*.rpm
+      - release/*/*.rpm.blockmap
+      - release/*/*.deb
+      - release/*/*.deb.blockmap
+      - release/*/*.AppImage
+      - release/*/*.AppImage.blockmap
+      - release/*/*.tar.gz
+      - release/*/*.tar.gz.blockmap
+      - release/*/*.tar.xz
+      - release/*/*.tar.xz.blockmap
+      - release/*/alpha.yml
+      - release/*/beta.yml
+      - release/*/dev.yml
+      - release/*/rc.yml
+      - release/*/stable.yml
+      - release/*/latest.yml
+      - release/*/alpha-*.yml
+      - release/*/beta-*.yml
+      - release/*/dev-*.yml
+      - release/*/rc-*.yml
+      - release/*/stable-*.yml
+      - release/*/latest-*.yml
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
