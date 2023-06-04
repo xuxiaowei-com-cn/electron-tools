@@ -188,13 +188,15 @@ app.on('ready', function () {
   // 启动项目后，立即检查更新
   autoUpdater.checkForUpdates().then((updateCheckResult) => {
     logUpdater.info('checkForUpdates 检查更新', updateCheckResult)
-    updateCheckResult.downloadPromise.then(() => {
-      const notificationContent = AppUpdater.formatDownloadNotification(updateCheckResult.updateInfo.version, app.name, {
-        title: '新的更新已准备好安装',
-        body: '{appName} 版本 {version} 已下载，将在退出时自动安装'
+    if (updateCheckResult != null) {
+      updateCheckResult.downloadPromise.then(() => {
+        const notificationContent = AppUpdater.formatDownloadNotification(updateCheckResult.updateInfo.version, app.name, {
+          title: '新的更新已准备好安装',
+          body: '{appName} 版本 {version} 已下载，将在退出时自动安装'
+        })
+        new (Notification)(notificationContent).show()
       })
-      new (Notification)(notificationContent).show()
-    })
+    }
   })
   // 每隔 5 分钟，检查一次更新
   setInterval(() => {
