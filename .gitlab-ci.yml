@@ -39,6 +39,7 @@ build:node:18.16.0:
   artifacts:
     name: "${CI_JOB_NAME}"
     paths:
+      - release/**/**.exe
       - release/**/**.rpm
       - release/**/**.deb
       - release/**/**.AppImage
