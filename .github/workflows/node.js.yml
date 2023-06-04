@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node-version: [ 16.x, 18.x ]
+        node-version: [ 18.x ]
         os: [ "ubuntu-latest", "windows-latest", "macos-latest" ]
         arch: [ x64, arm64 ]
         exclude:
@@ -29,10 +29,7 @@ jobs:
           # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128534557/jobs/9225307705
           - arch: arm64
             os: windows-latest
-          # https://github.com/xuxiaowei-com-cn/electron-tools/actions/runs/5128542346/jobs/9225322231
-          - arch: arm64
-            os: macos-latest
-            node-version: 16.x
+
     env:
       # npm 缓存路径
       NPM_CONFIG_CACHE: ~/.cache
@@ -48,7 +45,7 @@ jobs:
           echo $NPM_CONFIG_CACHE
           echo $ELECTRON_CACHE
 
-      - name: Use Node.js ${{ matrix.node-version }} !(macos-latest && arm64)
+      - name: Use Node.js ${{ matrix.node-version }} !(macos-latest arm64)
         uses: actions/setup-node@v3
         if: ${{ !(matrix.os == 'macos-latest' && matrix.arch == 'arm64') }}
         with:
@@ -74,69 +71,42 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-
 
-      - name: Ubuntu Rename artifactName
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        shell: sh
-        run: |
-          # 刪除特殊字符
-          sed -i 's/\r$//' electron-builder.json5
-          # 准备打包的文件命名方式
-          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/'
-          # 修改为准备打包的文件命名方式
-          sed -i 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/' electron-builder.json5
-          # 查看修改结果
-          cat electron-builder.json5
-
-      - name: macOS Rename artifactName arm64
-        if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
-        run: |
-          # 刪除特殊字符
-          sed -i '' 's/\r$//' electron-builder.json5
-          # 准备打包的文件命名方式
-          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/'
-          # 修改为准备打包的文件命名方式
-          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-arm64-${arch}.${ext}/' electron-builder.json5
-          # 查看修改结果
-          cat electron-builder.json5
-
-      - name: macOS Rename artifactName !arm64
-        if: ${{ matrix.os == 'macos-latest' && matrix.arch != 'arm64' }}
-        run: |
-          # 刪除特殊字符
-          sed -i '' 's/\r$//' electron-builder.json5
-          # 准备打包的文件命名方式
-          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/'
-          # 修改为准备打包的文件命名方式
-          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/' electron-builder.json5
-          # 查看修改结果
-          cat electron-builder.json5
-
-      - name: Windows Rename artifactName
-        if: ${{ matrix.os == 'windows-latest' }}
-        shell: powershell
-        run: |
-          # 准备打包的文件命名方式
-          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}/'
-          # 修改为准备打包的文件命名方式
-          (Get-Content electron-builder.json5) -replace '\$\{productName\}_\$\{version\}\-\$\{arch\}\.\$\{ext\}', '${productName}_${version}-node-${{ matrix.node-version }}-${arch}.${ext}' | Set-Content electron-builder.json5
-          # 查看修改结果
-          cat electron-builder.json5
 
       - run: node -v
       - run: npm i
       - run: npm run build
 
-      - name: electron:build !(ubuntu-latest)
-        if: ${{ matrix.os != 'ubuntu-latest' }}
+      - name: electron:build (macos-latest x64)
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'x64' }}
+        run: |
+          npm run electron:build
+
+      - name: electron:build (macos-latest arm64)
+        if: ${{ matrix.os == 'macos-latest' && matrix.arch == 'arm64' }}
+        run: |
+          # 刪除特殊字符
+          sed -i '' 's/\r$//' electron-builder.json5
+          # 准备打包的文件命名方式
+          echo 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-arm64.${ext}/'
+          # 修改为准备打包的文件命名方式
+          sed -i '' 's/${productName}_${version}-${arch}.${ext}/${productName}_${version}-arm64.${ext}/' electron-builder.json5
+          # 查看修改结果
+          cat electron-builder.json5
+          npm run electron:build
+
+      - name: electron:build (windows-latest)
+        if: ${{ matrix.os == 'windows-latest' }}
         run: |
           npm run electron:build
 
       - name: electron:build (ubuntu-latest)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
+          cat electron-builder.json5
+          # 增加 .rpm 产物
+          sed -i '/"AppImage",/i \ \ \ \ \ \ "rpm",' electron-builder.json5
+          cat electron-builder.json5
           npm run electron:build
-          npm run electron:build:linux:deb
-          npm run electron:build:linux:rpm
 
       - run: ls release
       - name: Ubuntu ls release
@@ -154,27 +124,34 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: electron-tools-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.arch }}
+          name: electron-tools-${{ matrix.os }}-${{ matrix.arch }}
           path: |
-            release/*.*.*/electron-tools_*.*.*-node-16.x-amd64.deb
-            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.tar.gz
-            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.tar.xz
-            release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
-            release/*.*.*/electron-tools_*.*.*-node-16.x-x86_64.rpm
-            release/*.*.*/electron-tools_*.*.*-node-16.x-ia32.exe
-            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.exe
-            release/*.*.*/electron-tools_*.*.*-node-16.x.exe
-            release/*.*.*/electron-tools_*.*.*-node-16.x-x64.dmg
-            release/*.*.*/electron-tools_*.*.*-node-18.x-amd64.deb
-            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.tar.gz
-            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.tar.xz
-            release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
-            release/*.*.*/electron-tools_*.*.*-node-18.x-x86_64.rpm
-            release/*.*.*/electron-tools_*.*.*-node-18.x-ia32.exe
-            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.exe
-            release/*.*.*/electron-tools_*.*.*-node-18.x.exe
-            release/*.*.*/electron-tools_*.*.*-node-18.x-x64.dmg
-            release/*.*.*/electron-tools_*.*.*-node-18.x-arm64-x64.dmg
+            release/*/*.exe
+            release/*/*.exe.blockmap
+            release/*/*.dmg
+            release/*/*.dmg.blockmap
+            release/*/*.rpm
+            release/*/*.rpm.blockmap
+            release/*/*.deb
+            release/*/*.deb.blockmap
+            release/*/*.AppImage
+            release/*/*.AppImage.blockmap
+            release/*/*.tar.gz
+            release/*/*.tar.gz.blockmap
+            release/*/*.tar.xz
+            release/*/*.tar.xz.blockmap
+            release/*/alpha.yml
+            release/*/beta.yml
+            release/*/dev.yml
+            release/*/rc.yml
+            release/*/stable.yml
+            release/*/latest.yml
+            release/*/alpha-*.yml
+            release/*/beta-*.yml
+            release/*/dev-*.yml
+            release/*/rc-*.yml
+            release/*/stable-*.yml
+            release/*/latest-*.yml  
 
 
   publish:
@@ -197,87 +174,81 @@ jobs:
           echo "YEAR_MONTH_DAY_HOUR=$(date +'%Y-%m-%dT%HZ')" >> $GITHUB_ENV
           echo "YEAR_MONTH_DAY_HOUR_MINUTE=$(date +'%Y-%m-%dT%H-%MZ')" >> $GITHUB_ENV
 
-      - name: Download Artifacts electron-tools-macos-latest-16.x-x64
+
+      - name: Download Artifacts electron-tools-ubuntu-latest-x64
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-16.x-x64
+          name: electron-tools-ubuntu-latest-x64
           path: .
 
       - run: ls *.*.*
 
-      - run: pwd
-
-      - name: Download Artifacts electron-tools-macos-latest-18.x-arm64
+      - name: Download Artifacts electron-tools-windows-latest-x64
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-18.x-arm64
+          name: electron-tools-windows-latest-x64
           path: .
 
       - run: ls *.*.*
 
-      - name: Download Artifacts electron-tools-macos-latest-18.x-x64
+      - name: Download Artifacts electron-tools-macos-latest-arm64
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-macos-latest-18.x-x64
-          path: .
+          name: electron-tools-macos-latest-arm64
+          path: ./arm64
 
+      - run: ls ./arm64/*.*.*
+      - run: cat ./arm64/*.*.*/latest-mac.yml
       - run: ls *.*.*
 
-      - name: Download Artifacts electron-tools-ubuntu-latest-16.x-x64
+      - name: Download Artifacts electron-tools-macos-latest-x64
         uses: actions/download-artifact@v3
         with:
-          name: electron-tools-ubuntu-latest-16.x-x64
-          path: .
+          name: electron-tools-macos-latest-x64
+          path: ./x64
 
+      - run: ls ./x64/*.*.*
+      - run: cat ./x64/*.*.*/latest-mac.yml
       - run: ls *.*.*
 
-      - name: Download Artifacts electron-tools-ubuntu-latest-18.x-x64
-        uses: actions/download-artifact@v3
-        with:
-          name: electron-tools-ubuntu-latest-18.x-x64
-          path: .
-
-      - run: ls *.*.*
-
-      - name: Download Artifacts electron-tools-windows-latest-16.x-x64
-        uses: actions/download-artifact@v3
-        with:
-          name: electron-tools-windows-latest-16.x-x64
-          path: .
-
-      - run: ls *.*.*
-
-      - name: Download Artifacts electron-tools-windows-latest-18.x-x64
-        uses: actions/download-artifact@v3
-        with:
-          name: electron-tools-windows-latest-18.x-x64
-          path: .
-
-      - run: ls *.*.*
+      - run: (cat x64/*.*.*/latest-mac.yml | sed '/files:/q') > latest-mac.yml && cat arm64/*.*.*/latest-mac.yml | grep '  - url\|    sha512\|    size' >> latest-mac.yml && cat x64/*.*.*/latest-mac.yml | sed -n '/files:/,$p' | tail -n +2 >> latest-mac.yml
+      - run: cat latest-mac.yml
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            *.*.*/electron-tools_*.*.*-node-16.x-amd64.deb
-            *.*.*/electron-tools_*.*.*-node-16.x-x64.tar.gz
-            *.*.*/electron-tools_*.*.*-node-16.x-x64.tar.xz
-            *.*.*/electron-tools_*.*.*-node-16.x-x86_64.AppImage
-            *.*.*/electron-tools_*.*.*-node-16.x-x86_64.rpm
-            *.*.*/electron-tools_*.*.*-node-16.x-ia32.exe
-            *.*.*/electron-tools_*.*.*-node-16.x-x64.exe
-            *.*.*/electron-tools_*.*.*-node-16.x.exe
-            *.*.*/electron-tools_*.*.*-node-16.x-x64.dmg
-            *.*.*/electron-tools_*.*.*-node-18.x-amd64.deb
-            *.*.*/electron-tools_*.*.*-node-18.x-x64.tar.gz
-            *.*.*/electron-tools_*.*.*-node-18.x-x64.tar.xz
-            *.*.*/electron-tools_*.*.*-node-18.x-x86_64.AppImage
-            *.*.*/electron-tools_*.*.*-node-18.x-x86_64.rpm
-            *.*.*/electron-tools_*.*.*-node-18.x-ia32.exe
-            *.*.*/electron-tools_*.*.*-node-18.x-x64.exe
-            *.*.*/electron-tools_*.*.*-node-18.x.exe
-            *.*.*/electron-tools_*.*.*-node-18.x-x64.dmg
-            *.*.*/electron-tools_*.*.*-node-18.x-arm64-x64.dmg
+            */*.exe
+            */*.exe.blockmap
+            */*.dmg
+            */*.dmg.blockmap
+            arm64/*/*.dmg
+            arm64/*/*.dmg.blockmap
+            x64/*/*.dmg
+            x64/*/*.dmg.blockmap
+            */*.rpm
+            */*.rpm.blockmap
+            */*.deb
+            */*.deb.blockmap
+            */*.AppImage
+            */*.AppImage.blockmap
+            */*.tar.gz
+            */*.tar.gz.blockmap
+            */*.tar.xz
+            */*.tar.xz.blockmap
+            */alpha.yml
+            */beta.yml
+            */dev.yml
+            */rc.yml
+            */stable.yml
+            */latest.yml
+            */alpha-*.yml
+            */beta-*.yml
+            */dev-*.yml
+            */rc-*.yml
+            */stable-*.yml
+            */latest-*.yml
+            latest-mac.yml
           body:
             自动推送时的发布
           # draft: 草稿状态，为 true 时，不创建标签，默认为 false
