@@ -248,6 +248,7 @@ jobs:
             */rc-*.yml
             */stable-*.yml
             */latest-*.yml
+            latest-mac.yml
           body:
             自动推送时的发布
           # draft: 草稿状态，为 true 时，不创建标签，默认为 false
