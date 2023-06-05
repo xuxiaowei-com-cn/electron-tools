@@ -105,6 +105,8 @@ jobs:
           cat electron-builder.json5
           # 增加 .rpm 产物
           sed -i '/"AppImage",/i \ \ \ \ \ \ "rpm",' electron-builder.json5
+          # 增加 .deb 产物
+          sed -i '/"AppImage",/i \ \ \ \ \ \ "deb",' electron-builder.json5
           cat electron-builder.json5
           npm run electron:build
 
