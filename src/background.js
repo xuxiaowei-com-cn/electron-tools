@@ -3,8 +3,9 @@
 // Modules to control application life and create native browser window
 const { app, protocol, BrowserWindow, Notification } = require('electron')
 const { autoUpdater, AppUpdater } = require('electron-updater')
-const path = require('path')
 const log = require('electron-log')
+const Store = require('electron-store')
+const path = require('path')
 const yargs = require('yargs')
 
 // 日志文件名
@@ -216,3 +217,25 @@ function formatBytes (bytes, decimals = 2) {
 }
 
 // //////////////////// 自动更新 结束 ////////////////////
+
+// //////////////////// 本地缓存 开始 ////////////////////
+
+// 推荐在 electron ready 后执行
+
+// 储存位置：C:\Users\%USERPROFILE%\AppData\Roaming\electron-tools\config.json
+const store = new Store()
+
+store.set('unicorn', '🦄')
+console.log(store.get('unicorn'))
+// => '🦄'
+
+// Use dot-notation to access nested properties
+store.set('foo.bar', true)
+console.log(store.get('foo'))
+// => {bar: true}
+
+store.delete('unicorn')
+console.log(store.get('unicorn'))
+// => undefined
+
+// //////////////////// 本地缓存 结束 ////////////////////
