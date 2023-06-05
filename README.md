@@ -168,7 +168,7 @@ npx husky-init
 ## 依赖
 
 ```shell
-npm i electron-log
+npm i axios electron-log electron-store electron-updater yargs
 ```
 
 ```shell
