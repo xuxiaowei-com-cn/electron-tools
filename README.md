@@ -113,6 +113,7 @@
     - OSS（阿里云对象储存）
         - endpoint：阿里云对象储存 OSS 的 endpoint 为上述 MinIO 对象储存的 https://{bucket}.{endpoint}
         - bucket：阿里云对象储存 OSS 的 bucket 为上述 MinIO 对象储存 bucket 内部的 path
+        - 其他配置参考 MinIO
         ```json5
         {
           "publish": [
