@@ -142,6 +142,21 @@
           ]
         }
         ```
+    - OBS（华为云对象储存）
+        - 与OSS（阿里云对象储存）相同
+        ```json5
+        {
+          "publish": [
+            {
+              "provider": "s3",
+              "bucket": "/",
+              "path": "/${platform}/${channel}/",
+              "endpoint": "https://public-xuxiaowei.obs.cn-east-3.myhuaweicloud.com",
+              "channel": "latest"
+            }
+          ]
+        }
+        ```
 
 ## Init & Configuration
 
