@@ -127,6 +127,21 @@
           ]
         }
         ```
+    - COS（腾讯云对象储存）
+        - 与OSS（阿里云对象储存）相同
+        ```json5
+        {
+          "publish": [
+            {
+              "provider": "s3",
+              "bucket": "/",
+              "path": "/${platform}/${channel}/",
+              "endpoint": "https://public-1255740549.cos.ap-shanghai.myqcloud.com",
+              "channel": "latest"
+            }
+          ]
+        }
+        ```
 
 ## Init & Configuration
 
