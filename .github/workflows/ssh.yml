@@ -20,5 +20,5 @@ jobs:
         run: |
           ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
           git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
-          git pull --progress -v --no-rebase jihulab $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
-          git push -u jihulab $CI_COMMIT_BRANCH
+          git pull --progress -v --no-rebase jihulab main
+          git push -u jihulab main
