@@ -13,7 +13,7 @@ jobs:
 
       - run: mkdir -p ~/.ssh
       - run: eval $(ssh-agent -s)
-      - run: echo ${{ secrets.JIHULAB_ID_RSA }} >> ~/.ssh/jihulab_id_rsa
+      - run: echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/jihulab_id_rsa
       - run: chmod 600 ~/.ssh/jihulab_id_rsa
       - run: eval $(ssh-agent -s)
       - run: ssh-add ~/.ssh/jihulab_id_rsa
