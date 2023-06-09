@@ -16,6 +16,7 @@ jobs:
         with:
           key: ${{ secrets.JIHULAB_ID_RSA }}
           name: "JiHuLab SSH Key"
+          known_hosts: jihulab.com
 
       - name: Push code to JiHuLab
         run: |
