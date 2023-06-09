@@ -11,10 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - run: mkdir -p ~/.ssh
-      - run: echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/jihulab_id_rsa
-      - run: chmod 600 ~/.ssh/jihulab_id_rsa
-      - run: eval $(ssh-agent -s) && ssh-add ~/.ssh/jihulab_id_rsa
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.JIHULAB_ID_RSA }}
+          name: "JiHuLab SSH Key"
 
       - name: Push code to JiHuLab
         run: |
