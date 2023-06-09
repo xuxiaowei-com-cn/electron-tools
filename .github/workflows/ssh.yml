@@ -13,6 +13,7 @@ jobs:
 
       - name: Push code to JiHuLab
         run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/jihulab_id_rsa
           chmod 600 ~/.ssh/jihulab_id_rsa
           eval $(ssh-agent -s)
