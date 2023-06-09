@@ -20,7 +20,7 @@ jobs:
 
       - name: Push code to JiHuLab
         run: |
-          ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
+          echo git@jihulab.com:$GITHUB_REPOSITORY.git
           git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
           git pull --progress -v --no-rebase jihulab main
           git push -u jihulab main
