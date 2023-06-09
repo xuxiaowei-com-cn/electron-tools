@@ -11,19 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - run: mkdir -p ~/.ssh
-      - run: eval $(ssh-agent -s)
-      - run: echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/jihulab_id_rsa
-      - run: chmod 600 ~/.ssh/jihulab_id_rsa
-      - run: eval $(ssh-agent -s)
-      - run: ssh-add ~/.ssh/jihulab_id_rsa
-
       - name: Push code to JiHuLab
         run: |
+          echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/jihulab_id_rsa
+          chmod 600 ~/.ssh/jihulab_id_rsa
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/jihulab_id_rsa
           git config --global user.email $GITLAB_USER_EMAIL
           git config --global user.name $GITLAB_USER_NAME
           git config --global user.email
           git config --global user.name
           ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
           git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
-          git push jihulab main
+          git pull --progress -v --no-rebase jihulab $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
+          git push -u jihulab $CI_COMMIT_BRANCH
