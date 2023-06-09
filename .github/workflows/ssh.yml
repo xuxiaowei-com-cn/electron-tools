@@ -18,8 +18,6 @@ jobs:
 
       - name: Push code to JiHuLab
         run: |
-          git config --global user.email $GITLAB_USER_EMAIL
-          git config --global user.name $GITLAB_USER_NAME
           git config --global user.email
           git config --global user.name
           ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
