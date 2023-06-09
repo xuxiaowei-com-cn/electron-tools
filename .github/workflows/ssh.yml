@@ -16,7 +16,7 @@ jobs:
           mkdir -p ~/.ssh
           eval $(ssh-agent -s)
           echo ${{ secrets.JIHULAB_ID_RSA }} >> ~/.ssh/jihulab_id_rsa
-          chmod 600 ~/.ssh/jihulab_id_rsa
+          # chmod 600 ~/.ssh/jihulab_id_rsa
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/jihulab_id_rsa
           git config --global user.email $GITLAB_USER_EMAIL
