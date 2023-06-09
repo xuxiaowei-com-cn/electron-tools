@@ -12,6 +12,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    auto-merge: true
     directory: "/"
     schedule:
       interval: "daily"
