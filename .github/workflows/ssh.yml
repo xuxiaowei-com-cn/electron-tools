@@ -14,8 +14,7 @@ jobs:
       - run: mkdir -p ~/.ssh
       - run: echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/jihulab_id_rsa
       - run: chmod 600 ~/.ssh/jihulab_id_rsa
-      - run: eval $(ssh-agent -s)
-      - run: ssh-add ~/.ssh/jihulab_id_rsa
+      - run: eval $(ssh-agent -s) && ssh-add ~/.ssh/jihulab_id_rsa
 
       - name: Push code to JiHuLab
         run: |
