@@ -1,0 +1,24 @@
+name: Push to JiHuLab
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.JIHULAB_ID_RSA }}
+          name: "JiHuLab SSH Key"
+          known_hosts: "jihulab.com"
+      - name: Push code to JiHuLab
+        env:
+          GIT_SSH_COMMAND: 'ssh -o "StrictHostKeyChecking=no"'
+        run: |
+          git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
+          git push jihulab main
