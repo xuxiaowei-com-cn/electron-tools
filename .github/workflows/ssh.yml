@@ -18,8 +18,6 @@ jobs:
 
       - name: Push code to JiHuLab
         run: |
-          git config --global user.email
-          git config --global user.name
           ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
           git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
           git pull --progress -v --no-rebase jihulab $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
