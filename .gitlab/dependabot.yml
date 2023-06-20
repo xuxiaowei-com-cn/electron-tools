@@ -12,9 +12,12 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    # 默认：5
+    # 设置为 1，防止 @typescript-eslint/parser、@typescript-eslint/parser 更新时出现冲突
+    open-pull-requests-limit: 1
     auto-merge: true
     directory: "/"
     schedule:
       interval: "daily"
-      time: "20:00"
+      time: "03:00"
       timezone: "Asia/Shanghai"
