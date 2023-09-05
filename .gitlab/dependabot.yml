@@ -18,6 +18,6 @@ updates:
     auto-merge: true
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
       time: "03:00"
       timezone: "Asia/Shanghai"
