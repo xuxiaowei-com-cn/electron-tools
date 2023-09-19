@@ -74,6 +74,7 @@ jobs:
 
       - run: node -v
       - run: rm .npmrc -rf
+        shell: sh
       - run: npm i
       - run: npm run build
 
