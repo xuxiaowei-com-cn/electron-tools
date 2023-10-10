@@ -17,7 +17,6 @@ build:yarn:node:18.16.0:
   script:
     - yarn config set registry https://registry.npmmirror.com
     - yarn install
-    - yarn build
     # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，即可构建 .rpm 产物，节省时间，避免网络影响
     # - apt-get update
     # - apt-get install -y rpm
@@ -27,7 +26,7 @@ build:yarn:node:18.16.0:
     # 增加 .deb 产物
     - sed -i '/"AppImage",/i \ \ \ \ \ \ "deb",' electron-builder.json5
     - cat electron-builder.json5
-    - npm run electron:build
+    - yarn electron:build
     - ls release
     - ls release/*.*.*
   cache:
@@ -86,7 +85,6 @@ build:npm:node:18.16.0:
   script:
     - npm config set registry https://registry.npmmirror.com
     - npm i
-    - npm run build
     # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，即可构建 .rpm 产物，节省时间，避免网络影响
     # - apt-get update
     # - apt-get install -y rpm
@@ -157,7 +155,6 @@ build:pnpm:node:18.16.0:
     - yarn global add pnpm
     - pnpm config set registry https://registry.npmmirror.com
     - pnpm install
-    - pnpm run build
     # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，即可构建 .rpm 产物，节省时间，避免网络影响
     # - apt-get update
     # - apt-get install -y rpm
@@ -167,7 +164,7 @@ build:pnpm:node:18.16.0:
     # 增加 .deb 产物
     - sed -i '/"AppImage",/i \ \ \ \ \ \ "deb",' electron-builder.json5
     - cat electron-builder.json5
-    - npm run electron:build
+    - pnpm run electron:build
     - ls release
     - ls release/*.*.*
   cache:
