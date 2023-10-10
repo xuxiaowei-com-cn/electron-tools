@@ -23,9 +23,12 @@ dist-ssr
 *.sln
 *.sw?
 
+/yarn.lock
+/pnpm-lock.yaml
+/package-lock.json
+
 /.eslintcache
 /release/
-/package-lock.json
 /components.d.ts
 /auto-imports.d.ts
 .cache
