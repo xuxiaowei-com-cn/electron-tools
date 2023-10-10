@@ -16,7 +16,7 @@ build:yarn:node:18.16.0:
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
     - yarn config set registry https://registry.npmmirror.com
-    - yarn
+    - yarn install
     - yarn build
     # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，即可构建 .rpm 产物，节省时间，避免网络影响
     # - apt-get update
