@@ -3,6 +3,75 @@ stages:
   - sync
 
 
+build:yarn:node:18.16.0:
+  stage: build
+  # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
+  image: xuxiaoweicomcn/node-rpm:18.16.0
+  variables:
+    # npm 缓存路径
+    NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.cache
+    # electron 缓存路径
+    ELECTRON_CACHE: $CI_PROJECT_DIR/.cache/electron/cache
+    # electron-builder 缓存路径
+    ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
+  script:
+    - yarn config set registry https://registry.npmmirror.com
+    - yarn
+    - yarn build
+    # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，即可构建 .rpm 产物，节省时间，避免网络影响
+    # - apt-get update
+    # - apt-get install -y rpm
+    - cat electron-builder.json5
+    # 增加 .rpm 产物
+    - sed -i '/"AppImage",/i \ \ \ \ \ \ "rpm",' electron-builder.json5
+    # 增加 .deb 产物
+    - sed -i '/"AppImage",/i \ \ \ \ \ \ "deb",' electron-builder.json5
+    - cat electron-builder.json5
+    - npm run electron:build
+    - ls release
+    - ls release/*.*.*
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - node_modules/
+      - .cache/
+  artifacts:
+    name: "${CI_JOB_NAME}"
+    paths:
+      - release/*/*.exe
+      - release/*/**.exe.blockmap
+      - release/*/*.dmg
+      - release/*/**.dmg.blockmap
+      - release/*/*.rpm
+      - release/*/**.rpm.blockmap
+      - release/*/*.deb
+      - release/*/**.deb.blockmap
+      - release/*/*.AppImage
+      - release/*/**.AppImage.blockmap
+      - release/*/*.tar.gz
+      - release/*/**.tar.gz.blockmap
+      - release/*/*.tar.xz
+      - release/*/**.tar.xz.blockmap
+      - release/*/alpha.yml
+      - release/*/beta.yml
+      - release/*/dev.yml
+      - release/*/rc.yml
+      - release/*/stable.yml
+      - release/*/latest.yml
+      - release/*/alpha-*.yml
+      - release/*/beta-*.yml
+      - release/*/dev-*.yml
+      - release/*/rc-*.yml
+      - release/*/stable-*.yml
+      - release/*/latest-*.yml
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 到 main 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    # PR 合并到 main 后执行、推送到 main 分支时
+    - if: $CI_COMMIT_BRANCH == "main"
+
 build:npm:node:18.16.0:
   stage: build
   # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
