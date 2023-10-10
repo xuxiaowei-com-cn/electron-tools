@@ -3,7 +3,7 @@ stages:
   - sync
 
 
-build:node:18.16.0:
+build:npm:node:18.16.0:
   stage: build
   # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
   image: xuxiaoweicomcn/node-rpm:18.16.0
@@ -15,6 +15,7 @@ build:node:18.16.0:
     # electron-builder 缓存路径
     ELECTRON_BUILDER_CACHE: $CI_PROJECT_DIR/.cache/electron-builder/cache
   script:
+    - npm config set registry https://registry.npmmirror.com
     - npm i
     - npm run build
     # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，即可构建 .rpm 产物，节省时间，避免网络影响
