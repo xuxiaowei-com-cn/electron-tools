@@ -56,7 +56,7 @@ const defaultConfigInfo = { // 默认配置信息
 const configInfo = store.get('configInfo')
 store.set('configInfo', configInfo === undefined ? defaultConfigInfo : configInfo)
 
-log.log("electronStore path", store.path)
+log.log('electronStore path', store.path)
 
 let mainWindow
 
