@@ -14,7 +14,7 @@ log.transports.file.fileName = 'background.log'
 // log.transports.file.level =
 // 日志控制台等级
 // log.transports.console.level =
-// 日志文件格式
+// 日志文件格式，默认值：'[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}]{scope} {text}'
 // log.transports.file.format =
 // 日志文件大小，默认：1048576（1M），超过此大小后会将现有日志移动到 *.old.log，删除当前文件。设置为 0 后，禁用此功能
 // log.transports.file.maxSize =
