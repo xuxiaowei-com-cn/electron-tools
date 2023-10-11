@@ -6,6 +6,7 @@ const { autoUpdater, AppUpdater } = require('electron-updater')
 const path = require('path')
 const log = require('electron-log')
 const yargs = require('yargs')
+const StoreConfig = require('electron-store')
 
 // 日志文件名
 // 日志位置：C:\Users\%USERPROFILE%\AppData\Roaming\electron-tools\logs
@@ -45,6 +46,17 @@ const options = yargs(args2).options({
   ENV: { type: 'string' }
 }).argv
 log.log('electron 环境', options.ENV)
+
+const store = new StoreConfig()
+
+const defaultConfigInfo = { // 默认配置信息
+  openDevTools: null // 打开开发者工具，默认为空，默认使用程序中的配置，此配置高于程序中的配置
+}
+
+const configInfo = store.get('configInfo')
+store.set('configInfo', configInfo === undefined ? defaultConfigInfo : configInfo)
+
+log.log("electronStore path", store.path)
 
 let mainWindow
 
