@@ -274,8 +274,8 @@ npm create vite@latest electron-tools -- --template vue-ts
 - Electron 镜像
 
 ```shell
-npm config set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
-npm config set ELECTRON_BUILDER_BINARIES_MIRROR=https://npmmirror.com/mirrors/electron-builder-binaries/
+npm config set electron_mirror=https://npmmirror.com/mirrors/electron/
+npm config set electron_builder_binaries_mirror=https://npmmirror.com/mirrors/electron-builder-binaries/
 npm i -D electron
 ```
 
