@@ -8,8 +8,8 @@ build:yarn:node:18.16.0:
   # 使用作者构建的镜像，无需运行 apt-get update && apt-get install -y rpm，节省时间，避免网络影响
   image: xuxiaoweicomcn/node-rpm:18.16.0
   variables:
-    # npm 缓存路径
-    NPM_CONFIG_CACHE: $CI_PROJECT_DIR/.cache
+    # yarn 缓存路径
+    YARN_CACHE_FOLDER: $CI_PROJECT_DIR/.cache
     # electron 缓存路径
     ELECTRON_CACHE: $CI_PROJECT_DIR/.cache/electron/cache
     # electron-builder 缓存路径
