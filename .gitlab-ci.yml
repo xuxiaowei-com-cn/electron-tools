@@ -145,7 +145,7 @@ build:pnpm:node:18.16.0:
   image: xuxiaoweicomcn/node-rpm:18.16.0
   variables:
     # pnpm 缓存路径
-    PNPM_HOME: $CI_PROJECT_DIR/.cache
+    PNPM_HOME: $CI_PROJECT_DIR/.pnpm-cache
     # electron 缓存路径
     ELECTRON_CACHE: $CI_PROJECT_DIR/.cache/electron/cache
     # electron-builder 缓存路径
