@@ -65,6 +65,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: 'build/icon.ico',
     webPreferences: {
       // webSecurity：默认值：true，设置为 false 则会允许所有跨域，不支持热加载
       preload: path.join(__dirname, 'preload.js')
