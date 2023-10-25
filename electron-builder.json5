@@ -47,6 +47,7 @@
   },
   // Linux 打包产物配置
   "linux": {
+    "icon": 'build/icon-256x256.png',
     "target": [
       "AppImage",
       "tar.gz",
