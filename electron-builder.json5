@@ -25,10 +25,11 @@
   ],
   // 苹果 打包产物配置
   "mac": {
-    "artifactName": "${productName}_${version}-${arch}.${ext}",
     "target": [
       "dmg"
-    ]
+    ],
+    "category": "Utility",
+    "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   // Windows 打包产物配置
   "win": {
@@ -47,11 +48,13 @@
   },
   // Linux 打包产物配置
   "linux": {
+    "icon": 'build/icon-256x256.png',
     "target": [
       "AppImage",
       "tar.gz",
       "tar.xz"
     ],
+    "category": "Utility",
     "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   // 额外资源
@@ -60,6 +63,10 @@
       from: 'build/icon-256x256.ico',
       to: '../build/icon-256x256.ico',
     },
+    {
+      from: 'build/icon-256x256.png',
+      to: '../build/icon-256x256.png',
+    }
   ],
   // nsis 配置
   "nsis": {
