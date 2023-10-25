@@ -33,7 +33,7 @@
   // Windows 打包产物配置
   "win": {
     // 应用程序图标的路径。
-    "icon": 'build/icon.ico',
+    "icon": 'build/icon-256x256.ico',
     "target": [
       {
         "target": "nsis",
@@ -57,8 +57,8 @@
   // 额外资源
   "extraResources": [
     {
-      from: 'build/icon.ico',
-      to: '../build/icon.ico',
+      from: 'build/icon-256x256.ico',
+      to: '../build/icon-256x256.ico',
     },
   ],
   // nsis 配置
