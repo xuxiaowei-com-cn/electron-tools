@@ -77,7 +77,7 @@
     "unplugin-auto-import": "0.16.6",
     "unplugin-vue-components": "0.25.2",
     "vite": "4.5.0",
-    "vue": "3.3.6",
+    "vue": "3.3.7",
     "vue-router": "4.2.5",
     "vue-tsc": "1.8.21"
   }
