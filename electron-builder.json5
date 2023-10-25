@@ -25,10 +25,11 @@
   ],
   // 苹果 打包产物配置
   "mac": {
-    "artifactName": "${productName}_${version}-${arch}.${ext}",
     "target": [
       "dmg"
-    ]
+    ],
+    "category": "Utility",
+    "artifactName": "${productName}_${version}-${arch}.${ext}"
   },
   // Windows 打包产物配置
   "win": {
