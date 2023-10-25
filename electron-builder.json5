@@ -61,6 +61,10 @@
       from: 'build/icon-256x256.ico',
       to: '../build/icon-256x256.ico',
     },
+    {
+      from: 'build/icon-256x256.png',
+      to: '../build/icon-256x256.png',
+    }
   ],
   // nsis 配置
   "nsis": {
