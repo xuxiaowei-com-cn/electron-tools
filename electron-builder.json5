@@ -5,7 +5,7 @@
  */
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  productName: "Electron Tools",
+  productName: "electron-tools",
   // 应用程序ID
   // 仅限NSIS目标，不支持Squirrel.Windows
   // 强烈建议设置显式ID
