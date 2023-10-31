@@ -225,11 +225,6 @@ build:windows:npm:node:18.16.0:
     - npm run electron:build
     - ls release
     - ls release/*.*.*
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - node_modules/
-      - .cache/
   artifacts:
     name: "${CI_JOB_NAME}"
     paths:
