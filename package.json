@@ -73,7 +73,7 @@
     "eslint-plugin-vue": "9.18.1",
     "husky": "8.0.3",
     "sass": "1.69.5",
-    "typescript": "5.2.2",
+    "typescript": "5.3.2",
     "unplugin-auto-import": "0.16.7",
     "unplugin-vue-components": "0.25.2",
     "vite": "5.0.0",
