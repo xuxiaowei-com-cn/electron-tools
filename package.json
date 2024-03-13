@@ -62,7 +62,7 @@
     "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "6.21.0",
     "@vitejs/plugin-vue": "5.0.4",
-    "electron": "29.1.1",
+    "electron": "29.1.2",
     "electron-builder": "24.13.3",
     "element-plus": "2.6.1",
     "eslint": "8.57.0",
