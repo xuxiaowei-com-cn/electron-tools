@@ -61,7 +61,7 @@
     "@element-plus/icons-vue": "2.3.1",
     "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "6.21.0",
-    "@vitejs/plugin-vue": "5.0.5",
+    "@vitejs/plugin-vue": "5.1.0",
     "electron": "31.2.1",
     "electron-builder": "24.13.3",
     "element-plus": "2.7.7",
