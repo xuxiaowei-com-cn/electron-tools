@@ -65,7 +65,7 @@
     "electron": "31.2.1",
     "electron-builder": "24.13.3",
     "element-plus": "2.7.7",
-    "eslint": "8.57.0",
+    "eslint": "9.7.0",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-n": "16.6.2",
