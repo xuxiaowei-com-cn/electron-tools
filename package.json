@@ -71,7 +71,7 @@
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-promise": "6.6.0",
     "eslint-plugin-vue": "9.27.0",
-    "husky": "9.1.2",
+    "husky": "9.1.4",
     "sass": "1.77.8",
     "typescript": "5.5.4",
     "unplugin-auto-import": "0.18.2",
