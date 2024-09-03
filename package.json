@@ -54,7 +54,7 @@
     "axios": "1.7.3",
     "electron-log": "5.1.7",
     "electron-store": "10.0.0",
-    "electron-updater": "6.2.1",
+    "electron-updater": "6.3.0",
     "yargs": "17.7.2"
   },
   "devDependencies": {
