@@ -179,7 +179,7 @@ jobs:
 
 
       - name: Download Artifacts electron-tools-ubuntu-latest-x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: electron-tools-ubuntu-latest-x64
           path: .
@@ -187,7 +187,7 @@ jobs:
       - run: ls *.*.*
 
       - name: Download Artifacts electron-tools-windows-latest-x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: electron-tools-windows-latest-x64
           path: .
@@ -195,7 +195,7 @@ jobs:
       - run: ls *.*.*
 
       - name: Download Artifacts electron-tools-macos-latest-arm64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: electron-tools-macos-latest-arm64
           path: ./arm64
@@ -205,7 +205,7 @@ jobs:
       - run: ls *.*.*
 
       - name: Download Artifacts electron-tools-macos-latest-x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: electron-tools-macos-latest-x64
           path: ./x64
